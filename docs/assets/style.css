@@ -43,3 +43,14 @@ ol.steps{padding-inline-start:1.3em}ol.steps li{margin:.6em 0}
 table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--line);padding:8px;text-align:start;vertical-align:middle}
 .mini svg{width:52px;height:auto;display:block}
 @media print{body{font-size:13px;background:#fff;color:#000}.btn,.nav,.noprint{display:none}.wrap{padding:0}}
+.stage{border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.stage h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.stage .num{font-size:15px;color:#fff;background:var(--blue);border-radius:999px;padding:1px 11px}
+.stage.now{border-color:var(--blue)}
+.exit{font-size:15px;background:var(--panel);border-radius:10px;padding:8px 12px;margin-top:8px}
+.check{display:flex;gap:10px;align-items:center;min-height:44px;font-weight:600;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--blue)}
+.state{font-size:14px;color:var(--soft)}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
+.links a{display:block;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.links a strong{display:block;color:var(--blue);font-size:18px}

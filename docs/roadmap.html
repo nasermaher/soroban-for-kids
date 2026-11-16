@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>خارطة المراحل</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb"><a href="index.html">سوروبان للأطفال</a> ← خارطة المراحل</p>
+<h1>من الخرزة الأولى إلى الحساب الذهني</h1>
+<p class="lead">ثماني مراحل بالترتيب. لا تنتقل لمرحلة قبل أن يحقّق طفلك «شرط الخروج» من التي قبلها — مهما كان عمره.</p>
+
+<div class="win"><strong>كيف تستخدمها:</strong> علّم المربّع حين يحقّق طفلك شرط الخروج. العلامات تُحفظ في متصفح هاتفك فقط. الترتيب مأخوذ من مناهج السوروبان المنشورة (انظر المصادر أسفل الصفحة)؛ أما «شروط الخروج» فاقتراح عملي منّا لتعرف متى تنتقل.</div>
+
+<div id="stages"></div>
+
+<h2>كم يستغرق ذلك؟ توقّعات واقعية</h2>
+<p>لا توجد مدة ثابتة. في تجربة عشوائية لسنة كاملة على أطفال الصفين الأول والثاني، <strong>تعثّر أغلب أطفال الصف الأول في إتقان السوروبان خلال السنة، بينما نجح أطفال الصف الثاني أكثر</strong>، ولم تتفوّق أيّ مجموعة على أقرانها في الحساب. وفي تجربة أطول (3 سنوات) على أطفال 5–7 سنوات في الهند ظهرت فوائد واضحة في الرياضيات، لكنها ارتبطت بقدرة كل طفل على الذاكرة البصرية.</p>
+<p class="src">المصدر: <a href="https://jnc.psychopen.eu/index.php/jnc/article/download/5761/5761.pdf/">Barner وآخرون، Journal of Numerical Cognition 2017</a> — وهي تلخّص أيضًا نتائج تجربة الهند 2016.</p>
+<p><strong>الخلاصة لوليّ الأمر:</strong> مع طفل في الرابعة أو الخامسة، المراحل 1–3 هدف ممتاز لسنة كاملة. الحساب الذهني (المرحلة 7) مسار طويل يحتاج سنوات، والفائدة فيه ليست مضمونة لكل طفل. اجعل المتعة وحسّ الأعداد هما الهدف، لا السرعة.</p>
+
+<h2>المصادر</h2>
+<ul class="src">
+  <li><a href="https://dmoliveira.github.io/soroban-dojo/paths/children">Soroban Dojo — مسار الأطفال</a>: الترتيب من قراءة الأعداد إلى الجمع على عمود ثم الأصدقاء ثم الأعداد الأكبر.</li>
+  <li><a href="https://en.wikibooks.org/wiki/Using_an_Abacus/Addition_and_subtraction">Wikibooks — Using an Abacus</a>: قواعد الجمع الثلاث (مباشر، صديق الخمسة، صديق العشرة).</li>
+  <li><a href="https://discovery.ucl.ac.uk/10052259/1/Donlan_and%20Wu%20CogDev%202017.pdf">Donlan &amp; Wu 2017 (UCL)</a>: الجمع والطرح بلا أعداد متمّمة ثم بها.</li>
+  <li><a href="https://www.cde.state.co.us/node/75238">Colorado Department of Education</a>: يتقن الطفل أزواج الخمسة قبل أزواج العشرة.</li>
+  <li><a href="https://pubmed.ncbi.nlm.nih.gov/21767040/">Frank &amp; Barner 2012</a>: الحساب الذهني يحفظ السوروبان في الذاكرة البصرية عمودًا عمودًا.</li>
+  <li><a href="https://mentalcalculation.org/soroban-rating-simulator">mentalcalculation.org</a>: نظام الدرجات (10 كيو ثم 10 دان).</li>
+</ul>
+
+<nav class="nav"><a href="index.html">← الصفحة الرئيسية</a><a href="guide.html">دليل وليّ الأمر →</a></nav>
+<p class="src">المحتوى متاح برخصة <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar">CC BY-SA 4.0</a>.</p>
+</main>
+<script>
+{
+  const S = [
+    { t: 'الأعداد 0–9 على عمود واحد', w: 'قاعدة الجسر، الخرزة العلوية = 5، ثم 6–9 = العلوية مع السفلية.', ex: 'يمثّل ويقرأ أي عدد من 0 إلى 9 تطلبه دون عدّ الخرزات بإصبعه، في ثلاث جلسات متتالية.', l: [['lessons/0001-the-five-bead.html', 'الدرس 1: الأعداد 0–5']] },
+    { t: 'الجمع والطرح المباشر على عمود', w: 'حين توجد الخرزات المطلوبة: 2+2، 5+3، 8−3. بلا أي «صديق».', ex: 'يحلّ 10 مسائل مباشرة متتالية بلا خطأ، ويقول الناتج قبل أن ينظر مرة ثانية.', src: 'Donlan & Wu' },
+    { t: 'أصدقاء الخمسة', w: 'حين لا تكفي الخرزات السفلية: لجمع 2 على 4 أنزل العلوية (+5) وأبعد 3 (−3). أزواج الخمسة: 1و4، 2و3.', ex: 'يذكر صديق الخمسة لأي عدد من 1 إلى 4 فورًا، ويحلّ مسائل مثل 4+3 و6−2 على السوروبان.', src: 'Wikibooks، CDE' },
+    { t: 'الأعداد الكبيرة: عمودان وثلاثة', w: 'كل عمود منزلة: الآحاد يمينًا ثم العشرات ثم المئات. 10 = خرزة واحدة في عمود العشرات.', ex: 'يمثّل ويقرأ أي عدد من 10 إلى 99، ثم أعدادًا من ثلاث خانات.', src: 'OISE' },
+    { t: 'أصدقاء العشرة', w: 'حين لا يكفي العمود كله: لجمع 7 على 5 أضف 1 للعشرات وأبعد 3 من الآحاد. أزواج العشرة: 1و9، 2و8، 3و7، 4و6، 5و5.', ex: 'يذكر صديق العشرة لأي عدد فورًا، ويحلّ مسائل مثل 8+5 و12−7.', src: 'Wikibooks، CDE' },
+    { t: 'الدمج والأعداد متعددة الخانات', w: 'مسائل تحتاج صديق الخمسة وصديق العشرة معًا، وجمع وطرح أعداد من خانتين وثلاث، وسلاسل من 3–5 أعداد.', ex: 'يحلّ سلسلة من 5 أعداد بخانتين بدقة على السوروبان.' },
+    { t: 'الحساب الذهني (أنزان)', w: 'تخيّل السوروبان وتحريك الخرزات «في الرأس». يبدأ بعمود واحد ثم عمودين. الدماغ يحفظ السوروبان عمودًا عمودًا، و3–4 أعمدة هي الحد المعتاد.', ex: 'يحلّ مسائل بخانة واحدة ذهنيًا بأصابع تتحرّك في الهواء، ثم بخانتين.', src: 'Frank & Barner' },
+    { t: 'الضرب والقسمة', w: 'الطرق اليابانية القياسية تعتمد على جدول الضرب، فيأتي بعد حفظه في المدرسة.', ex: 'يضرب عددًا من خانتين في خانة واحدة على السوروبان.' }
+  ];
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem('sfk-roadmap') || '{}'); } catch (e) {}
+  const el = document.getElementById('stages');
+  const draw = () => {
+    const first = S.findIndex((s, i) => !done[i]);
+    el.innerHTML = S.map((s, i) => `<section class="stage${i === first ? ' now' : ''}">
+      <h3><span class="num">${i + 1}</span>${s.t}</h3>
+      <p style="margin:.3em 0">${s.w}</p>
+      <div class="exit"><strong>شرط الخروج:</strong> ${s.ex}</div>
+      ${s.l ? `<p class="src">الدروس: ${s.l.map(x => `<a href="${x[0]}">${x[1]}</a>`).join('، ')}</p>` : '<p class="state">الدروس التفاعلية: قريبًا.</p>'}
+      <label class="check"><input type="checkbox" data-i="${i}" ${done[i] ? 'checked' : ''}> حقّق طفلي شرط الخروج</label>
+    </section>`).join('');
+  };
+  el.addEventListener('change', e => {
+    const i = e.target.dataset.i; if (i === undefined) return;
+    done[i] = e.target.checked;
+    try { localStorage.setItem('sfk-roadmap', JSON.stringify(done)); } catch (er) {}
+    draw();
+  });
+  draw();
+}
+</script>
+</body>
+</html>
