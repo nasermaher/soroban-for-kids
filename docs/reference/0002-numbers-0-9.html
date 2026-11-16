@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بطاقة الأعداد 0–9</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb noprint"><a href="../index.html">سوروبان للأطفال</a> ← مرجع</p>
+<h1>بطاقة الأعداد 0–9</h1>
+<p class="rule">الخرزة تُحسَب فقط حين تلمس الجسر. العلوية = 5، كل سفلية = 1.</p>
+<p>كل صف «توأمان»: الأسفل نفسه، والفرق الخرزة العلوية.</p>
+<table>
+<thead><tr><th>العدد</th><th>الشكل</th><th>التوأم</th><th>الشكل</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+<h2>الأصابع</h2>
+<p><strong>الإبهام</strong> يرفع السفلية. <strong>السبابة</strong> لكل حركة أخرى. لـ6–9 من الصفر: <strong>قرصة</strong> بالإصبعين معًا.</p>
+<h2>القراءة</h2>
+<p>الأعلى أولًا: إن كانت العلوية تلمس الجسر قل «خمسة و…» ثم عُدّ السفلية.</p>
+<p class="src">من <a href="../lessons/0001-the-five-bead.html">الدرس 1</a> و<a href="../lessons/0002-five-and-more.html">الدرس 2</a>. المحتوى برخصة CC BY-SA 4.0.</p>
+</main>
+<script src="../assets/soroban.js"></script>
+<script>
+{
+  document.getElementById('rows').innerHTML = [0, 1, 2, 3, 4].map(v => `<tr><td class="target" style="font-size:36px">${v}</td><td class="mini">${Soroban.svg(v)}</td><td class="target" style="font-size:36px">${v + 5}</td><td class="mini">${Soroban.svg(v + 5)}</td></tr>`).join('');
+}
+</script>
+</body>
+</html>

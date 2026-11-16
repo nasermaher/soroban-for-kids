@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الدرس 2: خمسة وزيادة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb"><a href="../index.html">سوروبان للأطفال</a> ← المرحلة 1 ← الدرس 2</p>
+
+<section class="hero">
+  <div>
+    <h1>خمسة وزيادة: الأعداد 6–9</h1>
+    <p class="lead">الخرزة العلوية لا تعمل وحدها. انزلها، وأضف تحتها، فتحصل على كل الأعداد حتى 9.</p>
+  </div>
+  <div class="rodbox" id="hero" aria-label="عمود تفاعلي يعرض 7"></div>
+</section>
+
+<div class="win"><strong>مكسب الدرس:</strong> تمثّل أي عدد من 6 إلى 9 بحركة واحدة وتقرأ أي عدد من 0 إلى 9، ومعك لعبة 10 دقائق تراجع فيها الأعداد 0–5 دون أن يشعر طفلك بالتكرار.</div>
+<p class="src">قبل هذا الدرس: <a href="0001-the-five-bead.html">الدرس 1 — الخرزة العلوية تساوي خمسة</a>.</p>
+
+<h2>1. الفكرة: «خمسة و…»</h2>
+<p>كل عدد من 6 إلى 9 = <strong>الخرزة العلوية (5)</strong> نازلة تلمس الجسر + <strong>خرزات سفلية</strong> مرفوعة.</p>
+<div class="box" id="table"></div>
+<p><strong>طريقة القراءة:</strong> انظر للأعلى أولًا. إن كانت العلوية تلمس الجسر قل «خمسة و…» ثم عُدّ السفلية: «خمسة وثلاثة = ثمانية». مع الوقت يرى الطفل الشكل كاملًا دفعة واحدة ويتوقّف عن العدّ.</p>
+<p class="src">المصدر: <a href="https://www.japansociety.org.uk/soroban-videos">Japan Society — Reading Numbers</a>، و<a href="https://www.oise.utoronto.ca/robertson/lesson-plans/soroban">خطة درس OISE — جامعة تورنتو</a>.</p>
+
+<h2>2. «التوائم»: نفس الأسفل، والفرق في الأعلى</h2>
+<p>انظر إلى 3 و8: الخرزات السفلية متطابقة، والفرق <strong>الخرزة العلوية فقط</strong>. هكذا كل زوج: <strong>1 و6</strong>، <strong>2 و7</strong>، <strong>3 و8</strong>، <strong>4 و9</strong>. هذه الملاحظة تربط الدرس الجديد بالقديم، وتجعل الطفل يراجع 1–4 كلما مثّل 6–9.</p>
+<div class="box" id="twins" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center"></div>
+
+<h2>3. «القرصة»: حركة واحدة بإصبعين</h2>
+<p>لتمثيل 6–9 من الصفر لا تحتاج حركتين منفصلتين: <strong>الإبهام يرفع السفلية والسبابة تُنزل العلوية في اللحظة نفسها</strong>، كأنك تقرص الجسر.</p>
+<p class="src">المصدر: <a href="https://www.scribd.com/doc/314164711/Abacus-Handbook-2004">The Abacus Handbook</a> — تمثيل 6 بإبهام يرفع خرزة سفلية وسبابة تُنزل العلوية في حركة واحدة تقريبًا.</p>
+<p><strong>حسب العمر:</strong> في الرابعة والخامسة لا بأس بحركتين منفصلتين (العلوية أولًا ثم السفلية). من السادسة علّم القرصة مباشرة.</p>
+
+<h2>4. أخطاء متوقّعة</h2>
+<ul>
+  <li><strong>يقرأ 6 «واحد»:</strong> نسي الأعلى. اسأل: «هل العلوية تلمس الجسر؟».</li>
+  <li><strong>يقرأ 6 «خمسة»:</strong> نسي الأسفل. اسأل: «وماذا تحت؟».</li>
+  <li><strong>يتوقّف قبل 5 أو 9:</strong> طبيعي. علامة الإتقان أن يختفي هذا التوقف.</li>
+</ul>
+
+<h2>5. تمرّن أنت (دقيقتان)</h2>
+<p class="src">المس الخرزات لتحريكها. الأعداد مختلطة من 0 إلى 9.</p>
+<div class="box practice">
+  <div class="rodbox" id="prac"></div>
+  <div>
+    <p style="margin:0">مثّل هذا العدد ثم اضغط «تحقّق»:</p>
+    <div class="target" id="tgt">7</div>
+    <p class="fb" id="pfb" aria-live="polite"></p>
+    <button class="btn" id="chk">تحقّق</button>
+    <button class="btn ghost" id="clr">امسح</button>
+    <p class="src" id="streak"></p>
+  </div>
+</div>
+
+<h2>6. اختبر ذاكرتك</h2>
+<p>من الذاكرة، دون النظر للأعلى. السؤال الخامس من الدرس الأول: المراجعة المتباعدة تثبّت أكثر.</p>
+<div class="box" id="quiz"></div>
+
+<h2>7. لعبة اليوم مع طفلك (10 دقائق)</h2>
+<ol class="steps">
+  <li><span class="t">دقيقة</span> <strong>لعب حر</strong>، ثم <strong>«ننيّم الخرزات»</strong>.</li>
+  <li><span class="t">دقيقة</span> <strong>مراجعة سريعة:</strong> «أرني 3… أرني 5… أرني 1». لاحظ: هل ما زال يتوقّف قبل 5؟</li>
+  <li><span class="t">3 دقائق</span> <strong>«الكفّ والأصابع».</strong> ارفع كفًّا مفتوحة (خمسة) وإصبعين من اليد الأخرى: «كم؟ سبعة!». ثم على السوروبان: العلوية هي الكفّ، والسفلية هي الأصابع الزائدة. كرّر مع 6 و8 و9، ثم يعرض هو بيديه وأنت تمثّل على السوروبان، ثم العكس.</li>
+  <li><span class="t">2 دقيقة</span> <strong>«التوأم».</strong> مثّل 2 وقل: «هذا اثنان. حوّله لتوأمه الكبير بحركة واحدة». يُنزل العلوية فيصير 7. ثم 1 ← 6، 3 ← 8، 4 ← 9، ثم بالعكس.</li>
+  <li><span class="t">3 دقائق</span> <strong>«ماذا ترى؟» من 0 إلى 9:</strong> اخلط الأعداد القديمة والجديدة. بدّلا الأدوار، وأخطئ مرة عمدًا ليصحّحك.</li>
+</ol>
+<p><strong>توقّف وهو ما زال يريد المزيد.</strong></p>
+<p><strong>متى تنتقل؟</strong> حين يمثّل ويقرأ أي عدد من 0 إلى 9 دون عدّ الخرزات ودون توقّف قبل 5، في ثلاث جلسات متتالية. هذا يُغلق المرحلة 1 كلها، بما فيها شرط الدرس الأول. إن ملّ من اللعبة نفسها، فغيّر اللعبة لا الدرس: البطاقات، أو «أنا أقول وأنت تمثّل» بالعكس.</p>
+
+<h2>المصدر الأساسي</h2>
+<p>أعد مشاهدة <strong>«Reading Numbers»</strong> من <a href="https://www.japansociety.org.uk/soroban-videos">Japan Society</a> مع التركيز هذه المرة على الأعداد 6–9.</p>
+<p>للطباعة: <a href="../reference/0002-numbers-0-9.html">بطاقة الأعداد 0–9</a>.</p>
+
+<div class="ask"><strong>عندك سؤال أو ملاحظة؟</strong> افتح <a href="https://github.com/nasermaher/soroban-for-kids/issues">Issue على GitHub</a> أو اسأل من أرسل لك الرابط.</div>
+
+<nav class="nav"><a href="0001-the-five-bead.html">← الدرس 1</a><span class="src">التالي: المرحلة 2 — الجمع والطرح المباشر (قريبًا)</span></nav>
+<p class="src">المحتوى متاح برخصة <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar">CC BY-SA 4.0</a>.</p>
+</main>
+<script src="../assets/soroban.js"></script>
+<script>
+{
+  const S = Soroban.svg;
+  Soroban.rod(document.getElementById('hero'), { value: 7 });
+  const words = ['', '', '', '', '', '', 'خمسة وواحد', 'خمسة واثنان', 'خمسة وثلاثة', 'خمسة وأربعة'];
+  document.getElementById('table').innerHTML = '<table><tbody>' + [6, 7, 8, 9].map(v => `<tr><td class="target" style="font-size:40px">${v}</td><td class="mini">${S(v)}</td><td>${words[v]}</td></tr>`).join('') + '</tbody></table>';
+  document.getElementById('twins').innerHTML = [[3, 8], [4, 9]].map(p => `<div style="display:flex;gap:8px;align-items:end">${p.map(v => `<div class="mini" style="text-align:center">${S(v)}<strong>${v}</strong></div>`).join('')}</div>`).join('');
+
+  const seq = [7, 4, 9, 5, 6, 2, 8, 0, 3, 6, 9, 1];
+  let n = 0, streak = 0;
+  const tgt = document.getElementById('tgt'), pfb = document.getElementById('pfb'), st = document.getElementById('streak');
+  const r = Soroban.rod(document.getElementById('prac'), { onChange: () => { pfb.textContent = ''; } });
+  const next = () => { n = (n + 1) % seq.length; tgt.textContent = seq[n]; r.set(0); };
+  document.getElementById('clr').onclick = () => { r.set(0); pfb.textContent = ''; };
+  document.getElementById('chk').onclick = () => {
+    const v = r.get(), t = seq[n];
+    if (v === t) { streak++; pfb.innerHTML = '<span class="ok">صحيح!</span>'; setTimeout(next, 700); }
+    else {
+      streak = 0;
+      let hint = 'عُدّ فقط الخرزات التي تلمس الجسر.';
+      if (t >= 5 && v < 5) hint = 'هذا العدد يحتاج الخرزة العلوية: أنزلها.';
+      else if (t < 5 && v >= 5) hint = 'العلوية نازلة فهي تُحسب 5. ارفعها.';
+      else if (t % 5 !== v % 5) hint = 'الأعلى صحيح؛ راجع عدد الخرزات السفلية.';
+      pfb.innerHTML = '<span class="no">هذا ' + v + '.</span> ' + hint;
+    }
+    st.textContent = streak ? 'متتالية صحيحة: ' + streak : '';
+  };
+
+  Soroban.quiz(document.getElementById('quiz'), [
+    { p: 'كم يعرض هذا العمود؟' + S(7), o: ['2', '5', '7', '8'], a: 2, x: 'العلوية نازلة (5) وخرزتان سفليتان: خمسة واثنان = 7.' },
+    { p: 'ما الفرق بين 3 و8 على العمود؟', o: ['خرزة سفلية واحدة', 'الخرزة العلوية فقط', 'خمس خرزات سفلية', 'لا فرق بينهما'], a: 1, x: 'التوأمان: الأسفل متطابق، و8 تزيد بالعلوية النازلة.' },
+    { p: 'كم يعرض هذا العمود؟' + S(9), o: ['9', '4', '8', '5'], a: 0, x: 'العلوية نازلة والسفلية الأربع كلها مرفوعة: خمسة وأربعة = 9.' },
+    { p: 'كيف تمثّل 6 من الصفر بأسرع حركة؟', o: ['ارفع ست خرزات سفلية', 'أنزل العلوية ثم انتظر', 'ارفع خرزتين وأنزل العلوية', 'قرصة: إبهام وسبابة معًا'], a: 3, x: 'الإبهام يرفع خرزة سفلية والسبابة تُنزل العلوية في اللحظة نفسها.' },
+    { p: 'مراجعة من الدرس 1: كم يعرض هذا العمود؟' + S(4), o: ['9', '3', '4', '1'], a: 2, x: 'العلوية بعيدة، وأربع سفلية تلمس الجسر: 4. توأمه 9.' },
+    { p: 'يقرأ طفلك العمود 6 فيقول «واحد». ما السؤال الأنسب؟', o: ['كم خرزة سفلية تحت؟', 'هل العلوية تلمس الجسر؟', 'هل عددت جيدًا يا بطل؟', 'لماذا أخطأت في العدّ؟'], a: 1, x: 'نسي الأعلى. السؤال يوجّه نظره للخرزة المنسية دون أن يقول له «خطأ».' }
+  ]);
+}
+</script>
+</body>
+</html>
