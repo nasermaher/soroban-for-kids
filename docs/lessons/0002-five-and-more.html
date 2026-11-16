@@ -44,7 +44,8 @@
 </ul>
 
 <h2>5. تمرّن أنت (دقيقتان)</h2>
-<p class="src">المس الخرزات لتحريكها. الأعداد مختلطة من 0 إلى 9.</p>
+<p class="src">المس الخرزات لتحريكها. <strong>مختلط:</strong> أعداد عشوائية من الصفر. <strong>السلّم:</strong> عُدّ من 0 إلى 9 دون مسح العمود — هنا تتدرّب على الانتقال الصعب من 4 إلى 5: تنزل العلوية <em>وتبتعد</em> الأربع (+5 −4).</p>
+<p><button class="btn ghost" id="mode" aria-pressed="false">الوضع: مختلط — بدّل إلى السلّم</button></p>
 <div class="box practice">
   <div class="rodbox" id="prac"></div>
   <div>
@@ -57,7 +58,8 @@
   </div>
 </div>
 
-<h2>6. اختبر ذاكرتك</h2>
+<h2>6. اختبر ذاكرتك (لك أنت)</h2>
+<p class="src"><strong>هذا الاختبار لك أنت، لا لطفلك.</strong> طفلك لا يحتاج القراءة؛ يتعلّم من اللعبة. إن أشركته، فاقرأ له السؤال فقط، ودعه يجيب، ثم اشرح بعد جوابه.</p>
 <p>من الذاكرة، دون النظر للأعلى. السؤال الخامس من الدرس الأول: المراجعة المتباعدة تثبّت أكثر.</p>
 <div class="box" id="quiz"></div>
 
@@ -65,9 +67,10 @@
 <ol class="steps">
   <li><span class="t">دقيقة</span> <strong>لعب حر</strong>، ثم <strong>«ننيّم الخرزات»</strong>.</li>
   <li><span class="t">دقيقة</span> <strong>مراجعة سريعة:</strong> «أرني 3… أرني 5… أرني 1». لاحظ: هل ما زال يتوقّف قبل 5؟</li>
-  <li><span class="t">3 دقائق</span> <strong>«الكفّ والأصابع».</strong> ارفع كفًّا مفتوحة (خمسة) وإصبعين من اليد الأخرى: «كم؟ سبعة!». ثم على السوروبان: العلوية هي الكفّ، والسفلية هي الأصابع الزائدة. كرّر مع 6 و8 و9، ثم يعرض هو بيديه وأنت تمثّل على السوروبان، ثم العكس.</li>
+  <li><span class="t">2 دقيقة</span> <strong>«الكفّ والأصابع».</strong> ارفع كفًّا مفتوحة (خمسة) وإصبعين من اليد الأخرى: «كم؟ سبعة!». ثم على السوروبان: العلوية هي الكفّ، والسفلية هي الأصابع الزائدة. كرّر مع 6 و8 و9، ثم يعرض هو بيديه وأنت تمثّل على السوروبان، ثم العكس.</li>
   <li><span class="t">2 دقيقة</span> <strong>«التوأم».</strong> مثّل 2 وقل: «هذا اثنان. حوّله لتوأمه الكبير بحركة واحدة». يُنزل العلوية فيصير 7. ثم 1 ← 6، 3 ← 8، 4 ← 9، ثم بالعكس.</li>
-  <li><span class="t">3 دقائق</span> <strong>«ماذا ترى؟» من 0 إلى 9:</strong> اخلط الأعداد القديمة والجديدة. بدّلا الأدوار، وأخطئ مرة عمدًا ليصحّحك.</li>
+  <li><span class="t">2 دقيقة</span> <strong>«السلّم».</strong> عُدّا معًا من 0 إلى 9 بصوت عالٍ، خرزة خرزة، <strong>دون مسح العمود</strong>. عند الانتقال من 4 إلى 5 توقّف واسأل: «الكفّ نزلت… أين تذهب الأصابع الأربع؟». هذه أصعب خطوة في السلّم كله.</li>
+  <li><span class="t">2 دقيقة</span> <strong>«ماذا ترى؟» من 0 إلى 9:</strong> اخلط الأعداد القديمة والجديدة. بدّلا الأدوار، وأخطئ مرة عمدًا ليصحّحك.</li>
 </ol>
 <p><strong>توقّف وهو ما زال يريد المزيد.</strong></p>
 <p><strong>متى تنتقل؟</strong> حين يمثّل ويقرأ أي عدد من 0 إلى 9 دون عدّ الخرزات ودون توقّف قبل 5، في ثلاث جلسات متتالية. هذا يُغلق المرحلة 1 كلها، بما فيها شرط الدرس الأول. إن ملّ من اللعبة نفسها، فغيّر اللعبة لا الدرس: البطاقات، أو «أنا أقول وأنت تمثّل» بالعكس.</p>
@@ -94,15 +97,28 @@
   let n = 0, streak = 0;
   const tgt = document.getElementById('tgt'), pfb = document.getElementById('pfb'), st = document.getElementById('streak');
   const r = Soroban.rod(document.getElementById('prac'), { onChange: () => { pfb.textContent = ''; } });
-  const next = () => { n = (n + 1) % seq.length; tgt.textContent = seq[n]; r.set(0); };
+  let ladder = false, lt = 1;
+  const cur = () => ladder ? lt : seq[n];
+  const next = () => {
+    if (ladder) { lt = lt === 9 ? 0 : lt + 1; if (lt === 0) { lt = 1; r.set(0); } }
+    else { n = (n + 1) % seq.length; r.set(0); }
+    tgt.textContent = cur();
+  };
+  const mb = document.getElementById('mode');
+  mb.onclick = () => {
+    ladder = !ladder; lt = 1; n = 0; r.set(0); tgt.textContent = cur(); pfb.textContent = ''; streak = 0; st.textContent = '';
+    mb.textContent = ladder ? 'الوضع: السلّم — بدّل إلى مختلط' : 'الوضع: مختلط — بدّل إلى السلّم';
+    mb.setAttribute('aria-pressed', ladder);
+  };
   document.getElementById('clr').onclick = () => { r.set(0); pfb.textContent = ''; };
   document.getElementById('chk').onclick = () => {
-    const v = r.get(), t = seq[n];
+    const v = r.get(), t = cur();
     if (v === t) { streak++; pfb.innerHTML = '<span class="ok">صحيح!</span>'; setTimeout(next, 700); }
     else {
       streak = 0;
       let hint = 'عُدّ فقط الخرزات التي تلمس الجسر.';
-      if (t >= 5 && v < 5) hint = 'هذا العدد يحتاج الخرزة العلوية: أنزلها.';
+      if (t === 5 && v === 9) hint = 'أنزلت العلوية لكن نسيت إبعاد الأربع: هذا 9. حين تنزل الخمسة ترجع الأربع لأسفل.';
+      else if (t >= 5 && v < 5) hint = 'هذا العدد يحتاج الخرزة العلوية: أنزلها.';
       else if (t < 5 && v >= 5) hint = 'العلوية نازلة فهي تُحسب 5. ارفعها.';
       else if (t % 5 !== v % 5) hint = 'الأعلى صحيح؛ راجع عدد الخرزات السفلية.';
       pfb.innerHTML = '<span class="no">هذا ' + v + '.</span> ' + hint;
