@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بطاقة الأعداد 0–5</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb noprint"><a href="../index.html">سوروبان للأطفال</a> ← مرجع</p>
+<h1>بطاقة الأعداد 0–5</h1>
+<p class="rule">الخرزة تُحسَب فقط حين تلمس الجسر.</p>
+<table>
+<thead><tr><th>العدد</th><th>الشكل</th><th>الحركة</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+<h2>الأصابع</h2>
+<p><strong>الإبهام</strong> يرفع السفلية. <strong>السبابة</strong> لكل حركة أخرى.</p>
+<h2>طقس كل جلسة</h2>
+<p>لعب حر ← «ننيّم الخرزات» (صفر) ← لعبة واحدة ← توقّف وهو ما زال يريد المزيد.</p>
+<p class="src">من <a href="../lessons/0001-the-five-bead.html">الدرس 1</a>.</p>
+</main>
+<script src="../assets/soroban.js"></script>
+<script>
+{
+  const how = ['كل الخرزات بعيدة عن الجسر', 'الإبهام يرفع خرزة سفلية', 'الإبهام يرفع خرزتين سفليتين', 'الإبهام يرفع ثلاث خرزات سفلية', 'الإبهام يرفع الأربع السفلية', 'السبابة تُنزل العلوية وحدها، والسفلية كلها بعيدة'];
+  document.getElementById('rows').innerHTML = how.map((h, v) => `<tr><td class="target" style="font-size:40px">${v}</td><td class="mini">${Soroban.svg(v)}</td><td>${h}</td></tr>`).join('');
+}
+</script>
+</body>
+</html>

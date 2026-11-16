@@ -1,0 +1,45 @@
+/*
+VOICE: a calm parent's handbook — warm, clear, unhurried.
+IDEA: a page that behaves like the abacus itself: black frame, one bright bar, coloured beads.
+PICTURE: a large live rod you can tap, drawn in the beads' own colours.
+COLOUR and TYPE: white / near-black ground, abacus blue accent, bead colours only on beads; Baloo Bhaijaan 2 + IBM Plex Sans Arabic.
+LAYOUT: one reading column, rod beside text on wide screens, stacked on phones.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#121417);--ink:light-dark(#16191d,#eef0f2);--soft:light-dark(#5b636d,#a9b1bb);--line:light-dark(#e3e6ea,#2a2f35);--panel:light-dark(#f4f7fa,#1b1f24);--blue:#2f8fd8;--green:#2fa84f;--red:#e0352b;--yellow:#f2c418}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.75 "IBM Plex Sans Arabic",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",sans-serif;line-height:1.15;text-wrap:balance;margin:0 0 .4em}
+h1{font-size:clamp(32px,6vw,48px)}h2{font-size:26px;margin-top:1.6em}h3{font-size:20px}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,48px) max(5vw,16px)}
+.crumb{font-size:14px;color:var(--soft);margin-bottom:18px}.crumb a{text-decoration:none}
+.lead{font-size:19px;color:var(--soft);max-width:60ch}
+.win{border-inline-start:5px solid var(--blue);background:var(--panel);padding:14px 18px;border-radius:10px;margin:22px 0}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:28px;align-items:center}
+@media(max-width:600px){.hero{grid-template-columns:1fr}.hero .rodbox{order:-1;max-width:190px;margin:0 auto}}
+.rodbox svg{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.18))}
+.rodbox polygon{cursor:pointer}
+.rule{font-size:22px;font-family:"Baloo Bhaijaan 2",sans-serif;margin:8px 0}
+.box{background:var(--panel);border-radius:14px;padding:18px;margin:18px 0}
+.practice{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:center}
+@media(max-width:600px){.practice{grid-template-columns:1fr}.practice .rodbox{max-width:180px;margin:0 auto}}
+.target{font-size:64px;line-height:1;font-family:"Baloo Bhaijaan 2",sans-serif;color:var(--blue)}
+.btn{font:inherit;font-size:16px;min-height:44px;padding:8px 18px;border-radius:10px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.fb{min-height:1.8em;font-weight:600}.ok{color:var(--green)}.no{color:var(--red)}
+.q-p svg{width:110px;height:auto;display:block;margin:6px 0}
+.q-o{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.opt{font:inherit;min-height:48px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;text-align:center}
+.opt.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--bg))}
+.opt.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--bg))}
+.q-n{font-size:14px;color:var(--soft);margin:0}
+ol.steps{padding-inline-start:1.3em}ol.steps li{margin:.6em 0}
+.t{display:inline-block;min-width:4.6em;font-weight:700;color:var(--blue);white-space:nowrap}
+.src{font-size:15px;color:var(--soft)}
+.ask{border:1.5px dashed var(--line);border-radius:12px;padding:14px 18px;margin-top:28px}
+.nav{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:30px;border-top:1px solid var(--line);padding-top:16px}
+table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--line);padding:8px;text-align:start;vertical-align:middle}
+.mini svg{width:52px;height:auto;display:block}
+@media print{body{font-size:13px;background:#fff;color:#000}.btn,.nav,.noprint{display:none}.wrap{padding:0}}
