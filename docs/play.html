@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>العب: أرني</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700&display=swap">
+<style>
+/*
+VOICE: a toy, not a test — warm, wordless, forgiving.
+IDEA: a sunny play mat with one big rod on it, like a wooden toy on a table.
+PICTURE: the rod itself, large, centre stage; the number above it as a numeral plus a "hand" of dots.
+COLOUR and TYPE: sunflower yellow field, navy ink, green go button, gold stars; Baloo Bhaijaan 2 numerals only.
+LAYOUT: number on top, rod in the middle, moon / tick / star jar on the bottom row; one screen, no scrolling.
+*/
+:root{--bg:#ffd84d;--ink:#1d2a4d;--go:#2fa84f;--card:#fff3c4}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo Bhaijaan 2",system-ui,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+main{height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:10px;padding:max(12px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;justify-content:center;gap:18px;background:var(--card);border-radius:22px;padding:6px 18px;box-shadow:0 4px 0 rgba(29,42,77,.15)}
+#num{font-size:clamp(64px,15vh,110px);line-height:1;min-width:1ch;text-align:center}
+#dots svg{display:block;height:clamp(44px,10vh,76px);width:auto;max-width:52vw}
+.stage{display:flex;align-items:center;justify-content:center;gap:16px;min-height:0}
+#rod{height:100%;max-height:600px;aspect-ratio:120/300}
+#rod svg{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 0 rgba(29,42,77,.18))}
+#rod polygon{cursor:pointer}
+#ghost{height:55%;aspect-ratio:120/300;opacity:0;transition:opacity .3s;width:0}
+#ghost.on{opacity:.75;width:auto}
+#ghost svg{width:100%;height:100%;display:block}
+.need{animation:pulse 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.12);filter:brightness(1.35)}}
+#rod.yes svg{animation:glow .6s ease-out}
+@keyframes glow{40%{filter:drop-shadow(0 0 22px #fff) drop-shadow(0 10px 0 rgba(29,42,77,.18))}}
+.bar{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:12px;align-items:center}
+button{font:inherit;border:0;border-radius:22px;cursor:pointer;color:var(--ink);display:grid;place-items:center;min-height:72px}
+button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+#moon{background:var(--card);box-shadow:0 5px 0 rgba(29,42,77,.18)}
+#go{background:var(--go);box-shadow:0 6px 0 #1f7a37;min-height:88px}
+#go:active,#moon:active{transform:translateY(4px);box-shadow:none}
+.jar{position:relative;display:grid;place-items:center}
+#count{position:absolute;font-size:26px;bottom:6px}
+.fly{position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:5;transition:transform .8s cubic-bezier(.4,-.3,.6,1),opacity .8s}
+#end{position:fixed;inset:0;background:var(--bg);display:none;place-items:center;align-content:center;gap:24px;z-index:9}
+#end.on{display:grid}
+#end .big{font-size:96px;line-height:1;text-align:center}
+@media (prefers-reduced-motion:reduce){.need,#rod.yes svg{animation:none}.need{filter:brightness(1.4)}.fly{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top" aria-live="polite">
+    <div id="num" aria-label="العدد المطلوب">3</div>
+    <div id="dots" aria-hidden="true"></div>
+  </div>
+  <div class="stage">
+    <div id="rod" aria-label="عمود السوروبان: المس الخرزات"></div>
+    <div id="ghost" aria-hidden="true"></div>
+  </div>
+  <div class="bar">
+    <button id="moon" aria-label="ننيّم الخرزات">
+      <svg width="40" height="40" viewBox="0 0 40 40"><path d="M27 6a15 15 0 1 0 7 22A12 12 0 0 1 27 6z" fill="#1d2a4d"/></svg>
+    </button>
+    <button id="go" aria-label="تحقّق">
+      <svg width="54" height="54" viewBox="0 0 54 54"><path d="M12 28l10 10 20-22" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="jar" aria-label="النجوم">
+      <svg id="jarsvg" width="70" height="84" viewBox="0 0 70 84"><rect x="20" y="2" width="30" height="10" rx="3" fill="#1d2a4d"/><path d="M14 14h42c4 0 6 3 6 7v50c0 7-5 11-11 11H19c-6 0-11-4-11-11V21c0-4 2-7 6-7z" fill="#fff" fill-opacity=".7" stroke="#1d2a4d" stroke-width="3"/><path d="M35 24l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#f59e0b"/></svg>
+      <span id="count">0</span>
+    </div>
+  </div>
+</main>
+<div id="end" role="dialog" aria-label="انتهت الجلسة">
+  <svg width="120" height="144" viewBox="0 0 70 84" style="margin:auto"><path d="M14 14h42c4 0 6 3 6 7v50c0 7-5 11-11 11H19c-6 0-11-4-11-11V21c0-4 2-7 6-7z" fill="#fff" stroke="#1d2a4d" stroke-width="3"/><path d="M35 30l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#f59e0b"/></svg>
+  <div class="big" id="endcount">0</div>
+  <button id="again" aria-label="العب مرة أخرى" style="background:var(--go);min-width:140px;box-shadow:0 6px 0 #1f7a37">
+    <svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg>
+  </button>
+</div>
+<script src="assets/soroban.js"></script>
+<script>
+{
+  const SESSION_MS = 5 * 60 * 1000;
+  const $ = id => document.getElementById(id);
+  const num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count');
+  let target = 3, tries = 0, started = 0, ended = false, ghostTimer = null, stars = 0;
+  try { stars = +localStorage.getItem('sfk-stars') || 0; } catch (e) {}
+  count.textContent = stars;
+
+  // Audio: short tones only, started from a tap (browsers require a gesture). No error sound exists.
+  let ac = null;
+  const tone = (f, t0, d, vol) => {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + t0;
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.001, t + d);
+      o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + .05);
+    } catch (e) {}
+  };
+  const tick = () => tone(660, 0, .08, .08);
+  const chime = () => { tone(784, 0, .25, .2); tone(1047, .12, .35, .2); tone(1319, .24, .5, .18); };
+
+  // Target picture: a blue "hand" of five dots once n >= 5, then loose dots; 0 is an empty dashed box.
+  const drawDots = n => {
+    const r = 9, gap = 24, extra = n % 5;
+    let s = '', x = 6;
+    if (n === 0) { s = '<rect x="4" y="10" width="48" height="40" rx="10" fill="none" stroke="#1d2a4d" stroke-width="3" stroke-dasharray="6 6"/>'; x = 56; }
+    if (n >= 5) {
+      s += `<rect x="2" y="6" width="${5 * gap + 6}" height="48" rx="14" fill="#2f7fd0"/>`;
+      for (let i = 0; i < 5; i++) s += `<circle cx="${18 + i * gap}" cy="30" r="${r}" fill="#fff"/>`;
+      x = 5 * gap + 22;
+    }
+    for (let i = 0; i < extra; i++) s += `<circle cx="${x + 12 + i * gap}" cy="30" r="${r}" fill="#e8a317" stroke="#1d2a4d" stroke-width="2"/>`;
+    dots.innerHTML = `<svg viewBox="0 0 ${Math.max(x + extra * gap + 12, 60)} 60">${s}</svg>`;
+  };
+
+  // 0–5, favouring 4 and 5 a little (the 4-to-5 change is the hard one). Never the same number twice.
+  const pick = () => {
+    const bag = [0, 1, 2, 3, 4, 4, 5, 5];
+    let n; do { n = bag[Math.floor(Math.random() * bag.length)]; } while (n === target);
+    return n;
+  };
+  const show = n => { target = n; tries = 0; num.textContent = n; drawDots(n); stopGhost(); };
+
+  const begin = () => { if (!started) started = Date.now(); };
+  const r = Soroban.rod(rodEl, { onChange: () => { begin(); tick(); } });
+
+  const stopGhost = () => { clearInterval(ghostTimer); ghostTimer = null; ghost.classList.remove('on'); ghost.innerHTML = ''; };
+  // After two misses: a faint side rod flips between the child's beads and the target, three times.
+  const showGhost = () => {
+    const from = r.get(); let k = 0;
+    ghost.innerHTML = Soroban.svg(from, target); ghost.classList.add('on');
+    clearInterval(ghostTimer);
+    ghostTimer = setInterval(() => {
+      k++;
+      ghost.innerHTML = k % 2 ? Soroban.svg(target) : Soroban.svg(from, target);
+      if (k >= 6) { clearInterval(ghostTimer); ghost.innerHTML = Soroban.svg(target); }
+    }, 700);
+  };
+
+  const flyStar = () => {
+    const a = rodEl.getBoundingClientRect(), b = $('jarsvg').getBoundingClientRect();
+    const x0 = a.left + a.width / 2 - 22, y0 = a.top + a.height / 3;
+    const s = document.createElement('div'); s.className = 'fly';
+    s.innerHTML = '<svg viewBox="0 0 44 44" width="44" height="44"><path d="M22 2l6 13 14 2-10 10 3 14-13-7-13 7 3-14L2 17l14-2z" fill="#f59e0b" stroke="#1d2a4d" stroke-width="2"/></svg>';
+    s.style.transform = `translate(${x0}px,${y0}px)`;
+    document.body.appendChild(s);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      s.style.transform = `translate(${b.left + b.width / 2 - 22}px,${b.top + b.height / 2 - 22}px) scale(.6)`;
+      s.style.opacity = '.3';
+    }));
+    setTimeout(() => { s.remove(); stars++; count.textContent = stars; try { localStorage.setItem('sfk-stars', stars); } catch (e) {} }, 820);
+  };
+
+  $('go').onclick = () => {
+    begin();
+    if (ended) return;
+    if (r.get() === target) {
+      chime(); stopGhost();
+      rodEl.classList.remove('yes'); void rodEl.offsetWidth; rodEl.classList.add('yes');
+      flyStar();
+      setTimeout(() => {
+        if (Date.now() - started > SESSION_MS) { ended = true; $('endcount').textContent = stars; $('end').classList.add('on'); return; }
+        show(pick()); // the rod is NOT cleared: the child moves from the last number to the next, e.g. 4 to 5
+      }, 950);
+    } else {
+      tries++;
+      r.hint(target); // pulse only the beads that must move; no red, no error sound, no lost stars
+      if (tries >= 2) showGhost();
+    }
+  };
+  $('moon').onclick = () => { begin(); r.set(0); tone(440, 0, .15, .08); };
+  $('again').onclick = () => { ended = false; started = Date.now(); $('end').classList.remove('on'); show(pick()); };
+
+  show(3);
+}
+</script>
+</body>
+</html>
