@@ -120,7 +120,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   const num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count');
 
   // ---- saved state (this browser only) ----
-  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0 });
+  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0 });
   let S = blank(), stars = 0;
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem('sfk-play') || '{}')); stars = +localStorage.getItem('sfk-stars') || 0; } catch (e) {}
   const save = () => { try { localStorage.setItem('sfk-play', JSON.stringify(S)); localStorage.setItem('sfk-stars', stars); } catch (e) {} };
@@ -284,7 +284,14 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     }
   };
   $('moon').onclick = () => {
-    begin(); r.set(0); tone(440, 0, .15, .08);
+    begin();
+    // A reset while the current number needs a crossing of five skips the hard move.
+    // Keep the reset (a safe fresh start), but bring that same crossing back two turns later.
+    const before = r.get();
+    S.moon++;
+    if (S.level !== 3 && hi(before) !== hi(target)) { S.dodge++; retry = { t: target, c: 2, fromHi: hi(before) }; }
+    save();
+    r.set(0); tone(440, 0, .15, .08);
     if (S.level === 3) { ladderI = 0; show(pick()); } else from = 0;
   };
   $('again').onclick = () => { ended = false; started = Date.now(); $('end').classList.remove('on'); show(pick()); };
@@ -317,6 +324,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
         <tr><td>نزولًا (مثل 5 ← 3): ترتفع العلوية</td><td class="n">${S.down[0]}</td><td class="n">${pct(S.down[1], S.down[0])}</td></tr>
       </tbody></table>
       <p class="soft">عبورات صحيحة متتالية الآن: ${S.crossRun} من ${UNLOCK2}.</p>
+      <p>زر القمر (المسح): ${S.moon} مرة، منها <strong>${S.dodge}</strong> كان العدد المطلوب فيها يحتاج عبور الخمسة. كل عبور مُسح يعود إليه بعد دورين.</p>
       <h3>كل عدد</h3>
       <table><thead><tr><th>العدد</th><th>مرات</th><th>من أول محاولة</th><th>محاولات خاطئة</th></tr></thead><tbody>${rows}</tbody></table>
       <p class="soft">الصفوف الملوّنة: ظهر العدد 3 مرات على الأقل، وأصاب فيه من أول محاولة أقل من 60%.</p>
