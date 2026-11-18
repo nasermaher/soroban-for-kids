@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بطاقة العشرة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb noprint"><a href="../index.html">سوروبان للأطفال</a> ← مرجع</p>
+<h1>بطاقة العشرة</h1>
+<p class="rule">الخرزة نفسها: على عمود الآحاد = 1، وعلى العمود المجاور (يساره) = 10.</p>
+<table>
+<thead><tr><th>العدد</th><th>الشكل (العشرات يسارًا)</th><th>الحركة</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+<h2>من 9 إلى 10</h2>
+<p>الآحاد ممتلئ: <strong>السبابة</strong> تُفرغه كله، و<strong>الإبهام</strong> يرفع خرزة واحدة عند الجار.</p>
+<h2>أخطاء شائعة</h2>
+<p>19 (نسي إفراغ الآحاد) · 1 (الخرزة على الآحاد) · 50 (العلوية على العشرات).</p>
+<p class="src">من <a href="../lessons/0003-ten.html">الدرس 3</a>. المحتوى برخصة CC BY-SA 4.0.</p>
+</main>
+<script src="../assets/soroban.js"></script>
+<script>
+{
+  const how = [[1, 'خرزة سفلية على الآحاد'], [9, 'الآحاد ممتلئ: العلوية والأربع'], [10, 'خرزة سفلية عند الجار، والآحاد صفر']];
+  document.getElementById('rows').innerHTML = how.map(([v, h]) => `<tr><td class="target" style="font-size:36px">${v}</td><td style="width:120px">${Soroban.pairSvg(v)}</td><td>${h}</td></tr>`).join('');
+}
+</script>
+</body>
+</html>

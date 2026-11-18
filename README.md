@@ -16,7 +16,8 @@
 |---|---|---|
 | 1 | [الخرزة العلوية تساوي خمسة](https://nasermaher.github.io/soroban-for-kids/lessons/0001-the-five-bead.html) — الأعداد 0–5 | متاح |
 | 1 | [خمسة وزيادة](https://nasermaher.github.io/soroban-for-kids/lessons/0002-five-and-more.html) — الأعداد 6–9 | متاح |
-| 1 | العشرة: العمود المجاور | قريبًا |
+| 1 | [العشرة](https://nasermaher.github.io/soroban-for-kids/lessons/0003-ten.html) — خرزة واحدة عند الجار | متاح |
+| 2 | الجمع والطرح المباشر | قريبًا |
 
 يُضاف كل درس بعد تجربته مع الأطفال فعلًا.
 

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الدرس 3: العشرة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+<p class="crumb"><a href="../index.html">سوروبان للأطفال</a> ← المرحلة 1 ← الدرس 3</p>
+
+<section class="hero">
+  <div>
+    <h1>العشرة: خرزة واحدة عند الجار</h1>
+    <p class="lead">حين يمتلئ العمود، لا نبحث عن خرزة عاشرة: نُفرغه، ونرفع خرزة واحدة على العمود المجاور.</p>
+  </div>
+  <div>
+    <div class="pairbox" id="hero" aria-label="عمودان تفاعليان: المس الخرزات"></div>
+    <div class="pairlab"><span>عشرات</span><span>آحاد</span></div>
+  </div>
+</section>
+
+<div class="win"><strong>مكسب الدرس:</strong> تمثّل 10 بحركة واحدة من 9، وتفرّق بين خرزة تساوي 1 وخرزة تساوي 10، ومعك لعبة 10 دقائق لطفلك. بهذا تكتمل المرحلة الأولى: الأعداد من 0 إلى 10.</div>
+<p class="src">قبل هذا الدرس: <a href="0001-the-five-bead.html">الدرس 1</a> و<a href="0002-five-and-more.html">الدرس 2</a>.</p>
+
+<h2>1. كل عمود «بيت» له قيمة</h2>
+<p>العمود الذي استعملناه حتى الآن هو <strong>عمود الآحاد</strong>، وهو أقصى اليمين. العمود الذي على <strong>يساره مباشرة</strong> هو <strong>عمود العشرات</strong>. الخرزات فيه بالشكل نفسه، لكن كل خرزة سفلية فيه تساوي <strong>عشرة</strong> لا واحدًا.</p>
+<p class="rule">الخرزة نفسها: على الآحاد = 1، وعند الجار = 10.</p>
+<p class="src">المصدر: <a href="https://www.oise.utoronto.ca/robertson/lesson-plans/soroban">خطة درس OISE — جامعة تورنتو</a>: كل عمود منزلة، الآحاد ثم العشرات إلى اليسار. و<a href="https://www.japansociety.org.uk/soroban-videos">فيديو «Reading Numbers» من Japan Society</a>.</p>
+
+<h2>2. تمثيل 10</h2>
+<ul>
+  <li>عمود العشرات: <strong>خرزة سفلية واحدة</strong> تلمس الجسر.</li>
+  <li>عمود الآحاد: <strong>صفر</strong> — كل خرزاته بعيدة عن الجسر.</li>
+</ul>
+<p><strong>من 9 إلى 10:</strong> عمود الآحاد ممتلئ (العلوية نازلة والأربع مرفوعة). لا مكان لخرزة أخرى، فـ<strong>نُفرغه كله</strong> (السبابة تُبعد الجميع) و<strong>نرفع خرزة واحدة</strong> عند الجار (الإبهام). العشر خرزات «انتقلت» وصارت خرزة واحدة.</p>
+<div class="box" id="steps" style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;align-items:end"></div>
+
+<h2>3. أخطاء متوقّعة</h2>
+<ul>
+  <li><strong>19 بدل 10:</strong> رفع خرزة الجار ونسي إفراغ الآحاد. اسأل: «البيت الأول ما زال ممتلئًا؟».</li>
+  <li><strong>1 بدل 10:</strong> وضع الخرزة على عمود الآحاد. اسأل: «في أي بيت تسكن العشرة؟».</li>
+  <li><strong>50 بدل 10:</strong> أنزل الخرزة العلوية في عمود العشرات. العلوية هناك تساوي خمسين؛ العشرة خرزة <strong>سفلية</strong>.</li>
+  <li><strong>عمود بعيد:</strong> وضع الخرزة على عمود في وسط السوروبان. الجار هو الذي على اليسار مباشرة.</li>
+</ul>
+
+<h2>4. تمرّن أنت (دقيقتان)</h2>
+<p class="src">المس الخرزات في العمودين. <strong>مختلط:</strong> أعداد من 0 إلى 10. <strong>السلّم:</strong> عُدّ من 0 إلى 10 دون مسح، فتمرّ بالخطوة من 9 إلى 10.</p>
+<p><button class="btn ghost" id="mode" aria-pressed="false">الوضع: مختلط — بدّل إلى السلّم</button></p>
+<div class="box practice">
+  <div>
+    <div class="pairbox" id="prac"></div>
+    <div class="pairlab"><span>عشرات</span><span>آحاد</span></div>
+  </div>
+  <div>
+    <p style="margin:0">مثّل هذا العدد ثم اضغط «تحقّق»:</p>
+    <div class="target" id="tgt">10</div>
+    <p class="fb" id="pfb" aria-live="polite"></p>
+    <button class="btn" id="chk">تحقّق</button>
+    <button class="btn ghost" id="clr">امسح</button>
+    <p class="src" id="streak"></p>
+  </div>
+</div>
+
+<h2>5. اختبر ذاكرتك (لك أنت)</h2>
+<p class="src"><strong>هذا الاختبار لك أنت، لا لطفلك.</strong> إن أشركته، فاقرأ له السؤال فقط، ودعه يجيب، ثم اشرح بعد جوابه.</p>
+<div class="box" id="quiz"></div>
+
+<h2>6. لعبة اليوم مع طفلك (10 دقائق)</h2>
+<ol class="steps">
+  <li><span class="t">دقيقة</span> <strong>لعب حر</strong>، ثم <strong>«ننيّم الخرزات»</strong> في العمودين.</li>
+  <li><span class="t">دقيقتان</span> <strong>«السلّم» حتى 9</strong> على عمود الآحاد، كما في الدرس 2. لاحظ الانتقال من 4 إلى 5.</li>
+  <li><span class="t">3 دقائق</span> <strong>«البيت امتلأ».</strong> احكِ: «هذا بيت الآحاد، يسكنه تسعة. جاء ضيف عاشر… لا مكان! فخرج الجميع، وسكنت خرزة واحدة في البيت المجاور تمثّل العشرة كلها». ابدأ من 7 أو 8، وعُدّا معًا حتى العاشرة. كرّرها ثلاث مرات.</li>
+  <li><span class="t">دقيقتان</span> <strong>«الكفّان».</strong> كفّ واحدة مفتوحة = الخرزة العلوية (5). الكفّان معًا = خرزة واحدة عند الجار (10). اعرض كفًّا ثم كفّين، ويمثّل هو على السوروبان.</li>
+  <li><span class="t">دقيقتان</span> <strong>«واحد أم عشرة؟».</strong> ارفع خرزة على الآحاد: «كم؟». ثم انقلها إلى الجار: «والآن؟». بدّل بين 1 و10 و9 بسرعة، ثم بدّلا الأدوار، وأخطئ مرة عمدًا ليصحّحك.</li>
+</ol>
+<p><strong>توقّف وهو ما زال يريد المزيد.</strong></p>
+<p><strong>متى تنتقل؟</strong> حين ينتقل من 9 إلى 10 دون مساعدة، ويقرأ 1 و10 دون خلط، في ثلاث جلسات متتالية. بهذا تكتمل المرحلة الأولى.</p>
+<p class="src">من الممارسة، لا من بحث: فكرة أن «خرزة واحدة تمثّل عشرة» مجرّدة على بعض الأطفال في الرابعة. إن لم يستوعبها بعد أيام، فاكتفِ بأن يمثّل 10 بالحركة الصحيحة، وانتقل للدرس التالي؛ سيعود إلى المنازل في المرحلة 4.</p>
+
+<div class="win"><strong>تدريب إضافي لطفلك وحده:</strong> صفحة اللعب لا تشمل العشرة بعد؛ استمر عليها لتثبيت 0–9. التفاصيل في <a href="../guide.html">دليل وليّ الأمر</a>.</div>
+
+<h2>المصدر الأساسي</h2>
+<p>أعد مشاهدة <strong>«Reading Numbers»</strong> من <a href="https://www.japansociety.org.uk/soroban-videos">Japan Society</a>، مع التركيز هذه المرة على الأعداد التي تستعمل أكثر من عمود.</p>
+<p>للطباعة: <a href="../reference/0003-ten.html">بطاقة العشرة</a>.</p>
+
+<div class="ask"><strong>عندك سؤال أو ملاحظة؟</strong> افتح <a href="https://github.com/nasermaher/soroban-for-kids/issues">Issue على GitHub</a> أو اسأل من أرسل لك الرابط.</div>
+
+<nav class="nav"><a href="0002-five-and-more.html">← الدرس 2</a><span class="src">التالي: المرحلة 2 — الجمع والطرح المباشر (قريبًا)</span></nav>
+<p class="src">المحتوى متاح برخصة <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar">CC BY-SA 4.0</a>.</p>
+</main>
+<script src="../assets/soroban.js"></script>
+<script>
+{
+  const P = Soroban.pairSvg;
+  Soroban.pair(document.getElementById('hero'), { value: 10 });
+  document.getElementById('steps').innerHTML = [[9, '9: الآحاد ممتلئ'], [0, 'نُفرغ الآحاد'], [10, '10: خرزة عند الجار']]
+    .map(([v, t]) => `<div style="width:150px;text-align:center">${P(v)}<p class="src" style="margin:4px 0 0">${t}</p></div>`).join('');
+
+  const seq = [10, 9, 1, 10, 0, 7, 10, 5, 10, 3];
+  let n = 0, streak = 0, ladder = false, lt = 1, nextTimer = null;
+  const tgt = document.getElementById('tgt'), pfb = document.getElementById('pfb'), st = document.getElementById('streak');
+  const r = Soroban.pair(document.getElementById('prac'), { onChange: () => { pfb.textContent = ''; } });
+  const cur = () => ladder ? lt : seq[n];
+  const next = () => {
+    if (ladder) { if (lt === 10) { lt = 1; r.set(0); } else lt++; }
+    else { n = (n + 1) % seq.length; }
+    tgt.textContent = cur();
+  };
+  const mb = document.getElementById('mode');
+  mb.onclick = () => {
+    clearTimeout(nextTimer);
+    ladder = !ladder; lt = 1; n = 0; r.set(0); tgt.textContent = cur(); pfb.textContent = ''; streak = 0; st.textContent = '';
+    mb.textContent = ladder ? 'الوضع: السلّم — بدّل إلى مختلط' : 'الوضع: مختلط — بدّل إلى السلّم';
+    mb.setAttribute('aria-pressed', ladder);
+  };
+  document.getElementById('clr').onclick = () => { r.set(0); pfb.textContent = ''; };
+  document.getElementById('chk').onclick = () => {
+    const v = r.get(), t = cur();
+    if (v === t) { streak++; pfb.innerHTML = '<span class="ok">صحيح!</span>'; clearTimeout(nextTimer); nextTimer = setTimeout(next, 700); }
+    else {
+      streak = 0;
+      const tens = Math.floor(v / 10), units = v % 10;
+      let hint = 'عُدّ فقط الخرزات التي تلمس الجسر، في كل عمود.';
+      if (t === 10 && tens === 1 && units > 0) hint = 'خرزة الجار صحيحة، لكن عمود الآحاد لم يُفرَغ. أبعد خرزاته كلها.';
+      else if (t === 10 && tens === 0 && units === 1) hint = 'الخرزة على عمود الآحاد تساوي 1. العشرة خرزة على العمود المجاور (اليسار).';
+      else if (t === 10 && tens >= 5) hint = 'العلوية على عمود العشرات تساوي خمسين. العشرة خرزة سفلية واحدة.';
+      else if (t < 10 && tens > 0) hint = 'عمود العشرات يجب أن يبقى فارغًا لهذا العدد.';
+      else if (t >= 5 && t < 10 && units < 5) hint = 'هذا العدد يحتاج الخرزة العلوية في عمود الآحاد.';
+      else if (t < 5 && units >= 5) hint = 'العلوية نازلة فهي تُحسب 5. ارفعها.';
+      pfb.innerHTML = '<span class="no">هذا ' + v + '.</span> ' + hint;
+    }
+    st.textContent = streak ? 'متتالية صحيحة: ' + streak : '';
+  };
+
+  Soroban.quiz(document.getElementById('quiz'), [
+    { p: 'كم يعرض العمودان (العشرات يسارًا)؟' + P(10), o: ['1', '10', '6', '11'], a: 1, x: 'خرزة سفلية واحدة على عمود العشرات، والآحاد صفر: 10.' },
+    { p: 'وكم يعرضان الآن؟' + P(1), o: ['10', '11', '1', '0'], a: 2, x: 'الخرزة نفسها، لكنها على عمود الآحاد: 1.' },
+    { p: 'عمود الآحاد على 9 ونريد واحدًا آخر. ماذا نفعل؟', o: ['نُفرغه ونرفع واحدة عند الجار', 'نرفع خرزة سفلية خامسة فيه', 'نُنزل العلوية مرة أخرى فيه', 'نضع خرزة عند الجار ونترك 9'], a: 0, x: 'العمود ممتلئ: يُفرغ كله، وترتفع خرزة واحدة على عمود العشرات.' },
+    { p: 'أراد طفلك 10 فصار العمودان هكذا. ما الخطأ؟' + P(19), o: ['نسي إفراغ عمود الآحاد', 'وضع الخرزة في العمود الخطأ', 'استعمل العلوية بدل السفلية', 'لا خطأ، هذا يعرض العشرة'], a: 0, x: 'عمود العشرات صحيح (10)، لكن الآحاد ما زال 9: المجموع 19.' },
+    { p: 'مراجعة: كم يعرض العمودان؟' + P(7), o: ['70', '2', '7', '17'], a: 2, x: 'العشرات فارغ، والآحاد: العلوية + خرزتان = 7.' },
+    { p: 'أين عمود العشرات بالنسبة لعمود الآحاد؟', o: ['على يساره مباشرة', 'على يمينه مباشرة', 'في منتصف السوروبان', 'في أقصى اليسار دائمًا'], a: 0, x: 'كل منزلة أكبر على يسار التي قبلها مباشرة.' }
+  ]);
+}
+</script>
+</body>
+</html>

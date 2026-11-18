@@ -73,7 +73,7 @@
   <li><span class="t">2 دقيقة</span> <strong>«ماذا ترى؟» من 0 إلى 9:</strong> اخلط الأعداد القديمة والجديدة. بدّلا الأدوار، وأخطئ مرة عمدًا ليصحّحك.</li>
 </ol>
 <p><strong>توقّف وهو ما زال يريد المزيد.</strong></p>
-<p><strong>متى تنتقل؟</strong> حين يمثّل ويقرأ أي عدد من 0 إلى 9 دون عدّ الخرزات ودون توقّف قبل 5، في ثلاث جلسات متتالية. هذا يُغلق المرحلة 1 كلها، بما فيها شرط الدرس الأول. إن ملّ من اللعبة نفسها، فغيّر اللعبة لا الدرس: البطاقات، أو «أنا أقول وأنت تمثّل» بالعكس.</p>
+<p><strong>متى تنتقل؟</strong> حين يمثّل ويقرأ أي عدد من 0 إلى 9 دون عدّ الخرزات ودون توقّف قبل 5، في ثلاث جلسات متتالية. هذا يُغلق الأعداد 0–9، بما فيها شرط الدرس الأول. إن ملّ من اللعبة نفسها، فغيّر اللعبة لا الدرس: البطاقات، أو «أنا أقول وأنت تمثّل» بالعكس.</p>
 
 <div class="win"><strong>تدريب إضافي لطفلك وحده:</strong> بعد جلستكما، أعطه <a href="../play.html">صفحة اللعب</a> 5 دقائق. لا تحتاج قراءة. التفاصيل في <a href="../guide.html">دليل وليّ الأمر</a>.</div>
 
@@ -83,7 +83,7 @@
 
 <div class="ask"><strong>عندك سؤال أو ملاحظة؟</strong> افتح <a href="https://github.com/nasermaher/soroban-for-kids/issues">Issue على GitHub</a> أو اسأل من أرسل لك الرابط.</div>
 
-<nav class="nav"><a href="0001-the-five-bead.html">← الدرس 1</a><span class="src">التالي: المرحلة 2 — الجمع والطرح المباشر (قريبًا)</span></nav>
+<nav class="nav"><a href="0001-the-five-bead.html">← الدرس 1</a><a href="0003-ten.html">الدرس 3: العشرة →</a></nav>
 <p class="src">المحتوى متاح برخصة <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ar">CC BY-SA 4.0</a>.</p>
 </main>
 <script src="../assets/soroban.js"></script>
@@ -96,7 +96,7 @@
   document.getElementById('twins').innerHTML = [[3, 8], [4, 9]].map(p => `<div style="display:flex;gap:8px;align-items:end">${p.map(v => `<div class="mini" style="text-align:center">${S(v)}<strong>${v}</strong></div>`).join('')}</div>`).join('');
 
   const seq = [7, 4, 9, 5, 6, 2, 8, 0, 3, 6, 9, 1];
-  let n = 0, streak = 0;
+  let n = 0, streak = 0, nextTimer = null;
   const tgt = document.getElementById('tgt'), pfb = document.getElementById('pfb'), st = document.getElementById('streak');
   const r = Soroban.rod(document.getElementById('prac'), { onChange: () => { pfb.textContent = ''; } });
   let ladder = false, lt = 1;
@@ -108,6 +108,7 @@
   };
   const mb = document.getElementById('mode');
   mb.onclick = () => {
+    clearTimeout(nextTimer);
     ladder = !ladder; lt = 1; n = 0; r.set(0); tgt.textContent = cur(); pfb.textContent = ''; streak = 0; st.textContent = '';
     mb.textContent = ladder ? 'الوضع: السلّم — بدّل إلى مختلط' : 'الوضع: مختلط — بدّل إلى السلّم';
     mb.setAttribute('aria-pressed', ladder);
@@ -115,7 +116,7 @@
   document.getElementById('clr').onclick = () => { r.set(0); pfb.textContent = ''; };
   document.getElementById('chk').onclick = () => {
     const v = r.get(), t = cur();
-    if (v === t) { streak++; pfb.innerHTML = '<span class="ok">صحيح!</span>'; setTimeout(next, 700); }
+    if (v === t) { streak++; pfb.innerHTML = '<span class="ok">صحيح!</span>'; clearTimeout(nextTimer); nextTimer = setTimeout(next, 700); }
     else {
       streak = 0;
       let hint = 'عُدّ فقط الخرزات التي تلمس الجسر.';

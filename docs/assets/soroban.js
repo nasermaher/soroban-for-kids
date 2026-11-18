@@ -59,5 +59,21 @@ window.Soroban = (function () {
     });
     show();
   }
-  return { svg, rod, quiz };
+  // Two rods side by side: tens on the left, units on the right (always left-to-right, even on RTL pages).
+  function pairSvg(v) {
+    const t = Math.floor(v / 10) % 10, u = v % 10;
+    return `<div class="pair" dir="ltr" role="img" aria-label="عمودان يعرضان ${v}"><div class="ten">${svg(t)}</div><div class="unit">${svg(u)}</div></div>`;
+  }
+  // Two tappable rods. value = 10 × tens + units.
+  function pair(el, opts) {
+    opts = opts || {};
+    const v0 = opts.value || 0;
+    el.innerHTML = '<div class="pair" dir="ltr"><div class="ten"></div><div class="unit"></div></div>';
+    const fire = () => opts.onChange && opts.onChange(get());
+    const t = rod(el.querySelector('.ten'), { value: Math.floor(v0 / 10) % 10, onChange: fire });
+    const u = rod(el.querySelector('.unit'), { value: v0 % 10, onChange: fire });
+    const get = () => 10 * t.get() + u.get();
+    return { get, set: v => { t.set(Math.floor(v / 10) % 10); u.set(v % 10); } };
+  }
+  return { svg, rod, quiz, pairSvg, pair };
 })();
