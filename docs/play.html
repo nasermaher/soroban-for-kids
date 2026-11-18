@@ -10,8 +10,8 @@
 VOICE: a toy, not a test — warm, wordless, forgiving.
 IDEA: a sunny play mat with one big rod on it, like a wooden toy on a table.
 PICTURE: the rod itself, large, centre stage; the number above it as a numeral plus a "hand" of dots.
-COLOUR and TYPE: sunflower yellow field, navy ink, green go button, gold stars; Baloo Bhaijaan 2 numerals only.
-LAYOUT: level badges, number card, rod, then moon / tick / star jar; one screen, no scrolling. Parent corner hides behind a long press on the jar.
+COLOUR and TYPE: sunflower yellow field, navy ink, green go button, gold stars; each surprise sticker brings its own colour to the end screen.
+LAYOUT: level badges, number card, rod, then moon / tick / star jar; one screen, no scrolling. Parent corner hides behind a long press on the jar and a word question.
 */
 :root{--bg:#ffd84d;--ink:#1d2a4d;--go:#2fa84f;--card:#fff3c4;--blue:#2f7fd0}
 *{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
@@ -22,13 +22,20 @@ main{height:100dvh;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;
 .lv button{min-height:44px;min-width:56px;border-radius:999px;background:var(--card);font-size:22px;box-shadow:0 3px 0 rgba(29,42,77,.15);padding:0 12px}
 .lv button[aria-pressed=true]{background:var(--ink);color:#fff}
 .lv button:disabled{opacity:.35;box-shadow:none}
-.top{display:flex;align-items:center;justify-content:center;gap:18px;background:var(--card);border-radius:22px;padding:4px 18px;box-shadow:0 4px 0 rgba(29,42,77,.15)}
+.top{display:flex;align-items:center;justify-content:center;gap:18px;background:var(--card);border-radius:22px;padding:4px 18px;box-shadow:0 4px 0 rgba(29,42,77,.15);min-height:clamp(76px,16vh,120px)}
 #num{font-size:clamp(60px,14vh,104px);line-height:1;min-width:1ch;text-align:center}
 #dots svg{display:block;height:clamp(40px,9vh,72px);width:auto;max-width:52vw}
+#choices{display:none;gap:12px;width:100%;justify-content:center}
+#choices button{flex:1;max-width:110px;min-height:clamp(70px,13vh,100px);font-size:clamp(52px,11vh,80px);line-height:1;background:#fff;box-shadow:0 5px 0 rgba(29,42,77,.2);transition:opacity .3s}
+#choices button:disabled{opacity:.2;box-shadow:none}
+main.reading #num,main.reading #dots{display:none}
+main.reading #choices{display:flex}
+main.reading #moon,main.reading #go{visibility:hidden}
 .stage{display:flex;align-items:center;justify-content:center;gap:16px;min-height:0}
 #rod{height:100%;max-height:600px;aspect-ratio:120/300}
 #rod svg{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 0 rgba(29,42,77,.18))}
 #rod polygon{cursor:pointer}
+#rod.ro polygon{pointer-events:none;cursor:default}
 #ghost{height:55%;aspect-ratio:120/300;opacity:0;transition:opacity .3s;width:0}
 #ghost.on{opacity:.8;width:auto}
 #ghost svg{width:100%;height:100%;display:block}
@@ -45,12 +52,23 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
 .jar{position:relative;display:grid;place-items:center;-webkit-touch-callout:none}
 #count{position:absolute;font-size:26px;bottom:6px}
 .fly{position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:5;transition:transform .8s cubic-bezier(.4,-.3,.6,1),opacity .8s}
-.over{position:fixed;inset:0;background:var(--bg);display:none;place-items:center;align-content:center;gap:22px;z-index:9;text-align:center}
+.over{position:fixed;inset:0;background:var(--bg);display:none;place-items:center;align-content:center;gap:20px;z-index:9;text-align:center;padding:20px}
 .over.on{display:grid}
-.over .big{font-size:96px;line-height:1}
 .badge{width:150px;height:150px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:84px;margin:auto;animation:pop .6s ease-out}
-@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.1)}}
-.play{background:var(--go);min-width:140px;box-shadow:0 6px 0 #1f7a37;margin:auto}
+@keyframes pop{0%{transform:scale(.3) rotate(-12deg)}70%{transform:scale(1.1) rotate(4deg)}}
+.play{background:var(--go);min-width:120px;box-shadow:0 6px 0 #1f7a37}
+.btns{display:flex;gap:16px;justify-content:center}
+.ghostbtn{background:rgba(255,255,255,.75);min-width:96px;box-shadow:0 5px 0 rgba(29,42,77,.2)}
+#end{transition:background .4s}
+#sticker{width:min(62vw,280px);aspect-ratio:1;margin:auto;background:#fff;border-radius:32px;padding:18px;box-shadow:0 10px 0 rgba(29,42,77,.18);animation:pop .7s ease-out}
+#sticker svg{width:100%;height:100%;display:block}
+.endstars{display:flex;align-items:center;justify-content:center;gap:8px;font-size:40px}
+#album{background:#fff8dc;align-content:start;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:min(100%,460px);margin:auto}
+.tile{aspect-ratio:1;border-radius:20px;padding:10px;display:grid;place-items:center;font-size:44px;color:rgba(29,42,77,.35);background:#ece5c8}
+.tile svg{width:100%;height:100%;display:block}
+.tile.shadow svg{filter:brightness(0) opacity(.22)}
+.tile.shadow{background:#fff;outline:3px dashed rgba(29,42,77,.3)}
 /* Parent corner: words are fine here */
 #parent{position:fixed;inset:0;background:#fff;color:var(--ink);z-index:10;display:none;overflow:auto;font:16px/1.6 "IBM Plex Sans Arabic",system-ui,sans-serif;user-select:text;-webkit-user-select:text}
 #parent.on{display:block}
@@ -61,20 +79,22 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
 #parent .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 #parent .pb{min-height:44px;padding:6px 16px;border-radius:12px;background:#eef2f8;font:600 16px "IBM Plex Sans Arabic",sans-serif}
 #parent .pb[aria-pressed=true]{background:var(--ink);color:#fff}
+#parent .gate{font-size:28px;min-width:84px}
 #parent table{border-collapse:collapse;width:100%;font-size:15px}
 #parent td,#parent th{border-bottom:1px solid #e3e6ea;padding:6px 8px;text-align:start}
 #parent td.n{text-align:end;font-variant-numeric:tabular-nums}
 #parent .soft{color:#5b636d;font-size:14px}
 #parent .warn{background:#fdecea}
-@media (prefers-reduced-motion:reduce){.need,#rod.yes svg,.badge{animation:none}.need{filter:brightness(1.4)}.fly{transition:none}}
+@media (prefers-reduced-motion:reduce){.need,#rod.yes svg,.badge,#sticker{animation:none}.need{filter:brightness(1.4)}.fly{transition:none}}
 </style>
 </head>
 <body>
-<main>
+<main id="main">
   <nav class="lv" id="lv" aria-label="المستويات"></nav>
   <div class="top" aria-live="polite">
     <div id="num" aria-label="العدد المطلوب">3</div>
     <div id="dots" aria-hidden="true"></div>
+    <div id="choices" aria-label="اختر العدد الذي تراه"></div>
   </div>
   <div class="stage">
     <div id="rod" aria-label="عمود السوروبان: المس الخرزات"></div>
@@ -94,15 +114,23 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   </div>
 </main>
 
-<div class="over" id="end" role="dialog" aria-label="انتهت الجلسة">
-  <svg width="120" height="144" viewBox="0 0 70 84" style="margin:auto"><path d="M14 14h42c4 0 6 3 6 7v50c0 7-5 11-11 11H19c-6 0-11-4-11-11V21c0-4 2-7 6-7z" fill="#fff" stroke="#1d2a4d" stroke-width="3"/><path d="M35 30l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#f59e0b"/></svg>
-  <div class="big" id="endcount">0</div>
-  <button class="play" id="again" aria-label="العب مرة أخرى"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg></button>
+<div class="over" id="end" role="dialog" aria-label="انتهت الجلسة: مفاجأة جديدة">
+  <div id="sticker"></div>
+  <div class="endstars"><svg width="40" height="40" viewBox="0 0 44 44"><path d="M22 2l6 13 14 2-10 10 3 14-13-7-13 7 3-14L2 17l14-2z" fill="#f59e0b" stroke="#1d2a4d" stroke-width="2"/></svg><span id="endcount">0</span></div>
+  <div class="btns">
+    <button class="ghostbtn" id="openAlbum" aria-label="الألبوم"><svg width="46" height="46" viewBox="0 0 46 46"><rect x="6" y="6" width="34" height="34" rx="6" fill="none" stroke="#1d2a4d" stroke-width="4"/><rect x="12" y="12" width="9" height="9" rx="2" fill="#1d2a4d"/><rect x="25" y="12" width="9" height="9" rx="2" fill="#1d2a4d"/><rect x="12" y="25" width="9" height="9" rx="2" fill="#1d2a4d"/><rect x="25" y="25" width="9" height="9" rx="2" fill="#1d2a4d" opacity=".3"/></svg></button>
+    <button class="play" id="again" aria-label="العب مرة أخرى"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg></button>
+  </div>
+</div>
+
+<div class="over" id="album" role="dialog" aria-label="الألبوم">
+  <div class="grid" id="agrid"></div>
+  <div class="btns"><button class="play" id="closeAlbum" aria-label="رجوع"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg></button></div>
 </div>
 
 <div class="over" id="unlock" role="dialog" aria-label="مستوى جديد">
   <div class="badge" id="ubadge">9</div>
-  <button class="play" id="ugo" aria-label="ابدأ المستوى الجديد"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg></button>
+  <div class="btns"><button class="play" id="ugo" aria-label="ابدأ المستوى الجديد"><svg width="54" height="54" viewBox="0 0 54 54"><path d="M18 12l26 15-26 15z" fill="#fff"/></svg></button></div>
 </div>
 
 <section id="parent" role="dialog" aria-label="ركن الوالد"><div class="in" id="pin"></div></section>
@@ -113,14 +141,32 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   const SESSION_MS = 5 * 60 * 1000;
   const UNLOCK2 = 5;   // first-try crossings of five in a row to open 0–9
   const UNLOCK3 = 8;   // first-try answers in a row on 0–9 to open the ladder
+  const PATTERN = ['show', 'show', 'show', 'read', 'read']; // turns repeat in this order (levels 1–2)
   const LADDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
   const LADDER_ICON = '<svg width="28" height="30" viewBox="0 0 28 30"><path d="M6 2v26M22 2v26M6 8h16M6 15h16M6 22h16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg>';
   const BADGES = ['5', '9', LADDER_ICON];
+  const N = '#1d2a4d';
+  // Surprise stickers: original simple drawings, each with its own end-screen colour.
+  const STICKERS = [
+    { c: '#7cc6fe', s: `<circle cx="50" cy="50" r="20" fill="#ffc83d"/>${[...Array(8)].map((_, i) => `<rect x="47" y="10" width="6" height="16" rx="3" fill="#ffc83d" transform="rotate(${i * 45} 50 50)"/>`).join('')}<circle cx="43" cy="47" r="2.5" fill="${N}"/><circle cx="57" cy="47" r="2.5" fill="${N}"/><path d="M42 56q8 7 16 0" stroke="${N}" stroke-width="3" fill="none" stroke-linecap="round"/>` },
+    { c: '#ff9f7f', s: `<path d="M20 50q25-28 50 0q-25 28-50 0z" fill="#ff7a3d"/><path d="M68 50l18-14v28z" fill="#ff7a3d"/><circle cx="34" cy="46" r="4" fill="#fff"/><circle cx="35" cy="46" r="2" fill="${N}"/><path d="M48 40q6 10 0 20" stroke="#ffd0b8" stroke-width="3" fill="none"/>` },
+    { c: '#b8e986', s: `${[...Array(6)].map((_, i) => `<ellipse cx="50" cy="28" rx="11" ry="17" fill="#ff6fa5" transform="rotate(${i * 60} 50 50)"/>`).join('')}<circle cx="50" cy="50" r="12" fill="#ffd84d"/><rect x="48" y="62" width="4" height="30" fill="#3c9a3c"/>` },
+    { c: '#ffd1e8', s: `<path d="M24 34l8-18 12 14h12l12-14 8 18v22q0 26-26 26t-26-26z" fill="#ffa64d"/><circle cx="40" cy="52" r="4" fill="${N}"/><circle cx="60" cy="52" r="4" fill="${N}"/><path d="M47 62h6l-3 4z" fill="#e0567a"/><path d="M30 64h-14M30 68l-12 4M70 64h14M70 68l12 4" stroke="${N}" stroke-width="2"/>` },
+    { c: '#a8e6cf', s: `<rect x="44" y="62" width="12" height="28" rx="3" fill="#8a5a3b"/><circle cx="50" cy="40" r="26" fill="#3c9a3c"/><circle cx="34" cy="52" r="16" fill="#46ad46"/><circle cx="66" cy="52" r="16" fill="#46ad46"/><circle cx="42" cy="36" r="4" fill="#e0352b"/><circle cx="60" cy="46" r="4" fill="#e0352b"/>` },
+    { c: '#c9b8ff', s: `<ellipse cx="48" cy="56" rx="26" ry="20" fill="#3fa9f5"/><circle cx="70" cy="40" r="13" fill="#3fa9f5"/><path d="M82 40l10 4-10 4z" fill="#ffb020"/><circle cx="73" cy="37" r="3" fill="${N}"/><path d="M30 52q14-18 30 0" fill="#2b8ad6"/>` },
+    { c: '#ffe08a', s: `<ellipse cx="48" cy="56" rx="28" ry="20" fill="#3c9a3c"/><path d="M28 50l10-10h20l10 10-10 10H38z" fill="#62c062"/><circle cx="82" cy="54" r="10" fill="#8bd18b"/><circle cx="85" cy="51" r="2.5" fill="${N}"/><rect x="26" y="70" width="10" height="10" rx="4" fill="#8bd18b"/><rect x="58" y="70" width="10" height="10" rx="4" fill="#8bd18b"/>` },
+    { c: '#9ad7f0', s: `<path d="M18 62h64l-10 18H28z" fill="#e0352b"/><rect x="48" y="16" width="4" height="46" fill="${N}"/><path d="M52 18q24 16 0 40z" fill="#fff"/><path d="M48 24q-18 14 0 34z" fill="#ffd84d"/><path d="M10 86q10-6 20 0t20 0 20 0 20 0" stroke="#2f7fd0" stroke-width="4" fill="none"/>` },
+    { c: '#ffc4a3', s: `<path d="M20 48l30-26 30 26z" fill="#e0352b"/><rect x="26" y="48" width="48" height="36" fill="#fff3c4"/><rect x="44" y="62" width="12" height="22" fill="#8a5a3b"/><rect x="30" y="54" width="10" height="10" fill="#7cc6fe"/><rect x="60" y="54" width="10" height="10" fill="#7cc6fe"/>` },
+    { c: '#d4f5a8', s: `<ellipse cx="34" cy="38" rx="18" ry="14" fill="#ff6fa5"/><ellipse cx="66" cy="38" rx="18" ry="14" fill="#ff6fa5"/><ellipse cx="36" cy="64" rx="13" ry="11" fill="#ffa64d"/><ellipse cx="64" cy="64" rx="13" ry="11" fill="#ffa64d"/><rect x="47" y="30" width="6" height="44" rx="3" fill="${N}"/><path d="M48 30q-6-12-12-14M52 30q6-12 12-14" stroke="${N}" stroke-width="2" fill="none"/>` },
+    { c: '#f7c6ff', s: `<circle cx="52" cy="50" r="22" fill="#e8a317"/><path d="M52 50m-12 0a12 12 0 1 1 12 12" stroke="#c47a10" stroke-width="4" fill="none"/><path d="M14 76q4-10 20-10h40q10 0 10 10z" fill="#9bd36b"/><path d="M80 66l4-14M84 66l8-10" stroke="${N}" stroke-width="3" stroke-linecap="round"/><circle cx="84" cy="52" r="3" fill="${N}"/><circle cx="92" cy="56" r="3" fill="${N}"/>` },
+    { c: '#1d2a4d', s: `<path d="M50 10q22 20 16 56H34q-6-36 16-56z" fill="#f2f2f2"/><circle cx="50" cy="38" r="8" fill="#7cc6fe" stroke="${N}" stroke-width="3"/><path d="M34 54l-12 16h14zM66 54l12 16H64z" fill="#e0352b"/><path d="M40 66q10 26 20 0z" fill="#ffb020"/>` }
+  ];
+  const stickerSvg = i => `<svg viewBox="0 0 100 100" aria-hidden="true">${STICKERS[i].s}</svg>`;
   const $ = id => document.getElementById(id);
-  const num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count');
+  const main = $('main'), num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count'), choices = $('choices');
 
   // ---- saved state (this browser only) ----
-  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0 });
+  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0, read: [0, 0], album: 0 });
   let S = blank(), stars = 0;
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem('sfk-play') || '{}')); stars = +localStorage.getItem('sfk-stars') || 0; } catch (e) {}
   const save = () => { try { localStorage.setItem('sfk-play', JSON.stringify(S)); localStorage.setItem('sfk-stars', stars); } catch (e) {} };
@@ -165,29 +211,53 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   });
 
   // ---- game state ----
-  let target = 3, from = 0, misses = 0, started = 0, ended = false, ghostTimer = null, retry = null, ladderI = 0;
+  let target = 3, from = 0, misses = 0, started = 0, ended = false, ghostTimer = null, retry = null, ladderI = 0, mode = 'show', turn = 0, busy = false;
   const begin = () => { if (!started) started = Date.now(); };
   const r = Soroban.rod(rodEl, { onChange: () => { begin(); tick(); } });
   const hi = v => v >= 5;
+  const pool = () => S.level === 1 ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const any = a => a[Math.floor(Math.random() * a.length)];
 
-  // Next number. Half the time it sits on the other side of five from where the beads are now,
-  // so the child keeps practising the crossing. A number missed twice comes back two turns later,
-  // reached from the same side of five as before.
+  // «أرني»: next number. Half the time on the other side of five from the beads, so the child keeps
+  // practising the crossing. A number missed twice comes back two turns later, from the same side.
   const pick = () => {
     if (S.level === 3) { const n = LADDER[ladderI % LADDER.length]; ladderI++; return n; }
-    const pool = S.level === 1 ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const cur = r.get();
+    const P = pool(), cur = r.get();
     if (retry) {
       retry.c--;
-      if (retry.c <= 0) { const t = retry.t; retry = null; if (t !== cur && pool.includes(t)) return t; }
-      else if (retry.c === 1) { const side = pool.filter(n => hi(n) === retry.fromHi && n !== cur && n !== retry.t); if (side.length) return side[Math.floor(Math.random() * side.length)]; }
+      if (retry.c <= 0) { const t = retry.t; retry = null; if (t !== cur && P.includes(t)) return t; }
+      else if (retry.c === 1) { const side = P.filter(n => hi(n) === retry.fromHi && n !== cur && n !== retry.t); if (side.length) return any(side); }
     }
     const cross = Math.random() < .5;
-    let opts = pool.filter(n => n !== cur && (hi(n) !== hi(cur)) === cross);
-    if (!opts.length) opts = pool.filter(n => n !== cur);
-    return opts[Math.floor(Math.random() * opts.length)];
+    let opts = P.filter(n => n !== cur && (hi(n) !== hi(cur)) === cross);
+    if (!opts.length) opts = P.filter(n => n !== cur);
+    return any(opts);
   };
-  const show = n => { target = n; from = r.get(); misses = 0; num.textContent = n; drawDots(n); stopGhost(); };
+
+  const show = n => {
+    mode = 'show'; main.classList.remove('reading'); rodEl.classList.remove('ro');
+    target = n; from = r.get(); misses = 0; num.textContent = n; drawDots(n); stopGhost();
+  };
+
+  // «ماذا ترى؟»: the rod shows a number; the child taps it among three numerals.
+  // Distractors: the "twin" across five first (the five-bead confusion), then a neighbour.
+  const showRead = () => {
+    const P = pool(), cur = r.get();
+    const n = any(P.filter(x => x !== cur));
+    mode = 'read'; target = n; misses = 0; stopGhost();
+    r.set(n); rodEl.classList.add('ro'); main.classList.add('reading');
+    const twin = n >= 5 ? n - 5 : n + 5;
+    const opts = [twin, n + 1, n - 1, n + 2, n - 2].filter((x, i, a) => P.includes(x) && x !== n && a.indexOf(x) === i).slice(0, 2);
+    const all = [n, ...opts].sort(() => Math.random() - .5);
+    choices.innerHTML = all.map(x => `<button data-v="${x}" aria-label="${x}">${x}</button>`).join('');
+  };
+
+  // Retry turns (a crossing that must come back) are always «أرني», never skipped by a reading turn.
+  const nextTurn = () => {
+    turn++;
+    if (S.level !== 3 && !(retry && retry.c <= 1) && PATTERN[turn % PATTERN.length] === 'read') showRead();
+    else show(pick());
+  };
 
   const setLevel = l => {
     S.level = l; save(); drawLevels(); retry = null;
@@ -195,9 +265,8 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     show(pick());
   };
 
-  // ---- help after misses ----
+  // ---- help after misses («أرني») ----
   const stopGhost = () => { clearInterval(ghostTimer); ghostTimer = null; ghost.classList.remove('on'); ghost.innerHTML = ''; };
-  // 2nd miss: side rod flips between the child's beads and the answer.
   const flipGhost = () => {
     const a = r.get(); let k = 0;
     ghost.innerHTML = Soroban.svg(a, target); ghost.classList.add('on');
@@ -215,7 +284,6 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     while (v % 5 !== t % 5) { v += v % 5 < t % 5 ? 1 : -1; steps.push(v); }
     return steps;
   };
-  // 3rd miss on: slow motion of those steps, twice, with a soft tick per move.
   const stepGhost = () => {
     const steps = stepsTo(r.get(), target);
     let k = 0, rounds = 0;
@@ -243,7 +311,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     setTimeout(() => { s.remove(); stars++; count.textContent = stars; save(); }, 820);
   };
 
-  // ---- record an answered number; returns the level just unlocked, if any ----
+  // ---- record an answered «أرني» number; returns the level just unlocked, if any ----
   const record = first => {
     const k = String(target), n = S.nums[k] || (S.nums[k] = [0, 0, 0]); // [shown, first-try, total misses]
     n[0]++; if (first) n[1]++; n[2] += misses;
@@ -260,31 +328,63 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     return unlocked;
   };
 
-  let busy = false;
+  // ---- end of a session: a surprise sticker; its colour fills the screen ----
+  const endSession = () => {
+    ended = true;
+    let i;
+    if (S.album < STICKERS.length) { i = S.album; S.album++; } else i = Math.floor(Math.random() * STICKERS.length);
+    save();
+    $('end').style.background = STICKERS[i].c;
+    $('endcount').style.color = STICKERS[i].c === N ? '#fff' : '';
+    $('sticker').innerHTML = stickerSvg(i);
+    $('sticker').style.animation = 'none'; void $('sticker').offsetWidth; $('sticker').style.animation = '';
+    $('endcount').textContent = stars;
+    $('end').classList.add('on');
+    fanfare();
+  };
+
+  const celebrate = unlocked => {
+    chime(); stopGhost();
+    rodEl.classList.remove('yes'); void rodEl.offsetWidth; rodEl.classList.add('yes');
+    flyStar();
+    busy = true;
+    setTimeout(() => {
+      busy = false;
+      if (unlocked) { fanfare(); $('ubadge').innerHTML = BADGES[unlocked - 1]; $('unlock').dataset.l = unlocked; $('unlock').classList.add('on'); drawLevels(); return; }
+      if (Date.now() - started > SESSION_MS) { endSession(); return; }
+      nextTurn(); // the rod is NOT cleared: the child moves from the last number to the next
+    }, 950);
+  };
+
   $('go').onclick = () => {
     begin();
-    if (ended || busy) return;
-    if (r.get() === target) {
-      busy = true;
-      chime(); stopGhost();
-      rodEl.classList.remove('yes'); void rodEl.offsetWidth; rodEl.classList.add('yes');
-      flyStar();
-      const unlocked = record(misses === 0);
-      setTimeout(() => {
-        busy = false;
-        if (unlocked) { fanfare(); $('ubadge').innerHTML = BADGES[unlocked - 1]; $('unlock').dataset.l = unlocked; $('unlock').classList.add('on'); drawLevels(); return; }
-        if (Date.now() - started > SESSION_MS) { ended = true; $('endcount').textContent = stars; $('end').classList.add('on'); return; }
-        show(pick()); // the rod is NOT cleared: the child moves from the last number to the next
-      }, 950);
-    } else {
+    if (ended || busy || mode !== 'show') return;
+    if (r.get() === target) celebrate(record(misses === 0));
+    else {
       misses++;
       r.hint(target); // pulse only the beads that must move; no red, no error sound, no lost stars
       if (misses === 2) flipGhost();
       if (misses >= 3) stepGhost();
     }
   };
+
+  choices.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || b.disabled || busy || ended) return;
+    begin();
+    if (+b.dataset.v === target) {
+      S.read[0]++; if (misses === 0) S.read[1]++; save();
+      choices.querySelectorAll('button').forEach(x => { if (x !== b) x.disabled = true; });
+      celebrate(0);
+    } else {
+      misses++;
+      b.disabled = true; // the wrong numeral fades away; no red, no sound
+      rodEl.innerHTML = Soroban.svg(target, 0); // pulse the beads that touch the bar: "count these"
+    }
+  });
+
   $('moon').onclick = () => {
     begin();
+    if (mode !== 'show') return;
     // A reset while the current number needs a crossing of five skips the hard move.
     // Keep the reset (a safe fresh start), but bring that same crossing back two turns later.
     const before = r.get();
@@ -294,18 +394,42 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     r.set(0); tone(440, 0, .15, .08);
     if (S.level === 3) { ladderI = 0; show(pick()); } else from = 0;
   };
-  $('again').onclick = () => { ended = false; started = Date.now(); $('end').classList.remove('on'); show(pick()); };
+  $('again').onclick = () => { ended = false; started = Date.now(); $('end').classList.remove('on'); nextTurn(); };
   $('ugo').onclick = () => { $('unlock').classList.remove('on'); setLevel(+$('unlock').dataset.l); };
 
-  // ---- parent corner: long press on the jar ----
-  let hold = null;
+  // ---- album: collected stickers, the next one as a mystery shadow ----
+  const drawAlbum = () => {
+    $('agrid').innerHTML = STICKERS.map((st, i) => {
+      if (i < S.album) return `<div class="tile" style="background:${st.c}">${stickerSvg(i)}</div>`;
+      if (i === S.album) return `<div class="tile shadow">${stickerSvg(i)}</div>`;
+      return '<div class="tile">?</div>';
+    }).join('');
+  };
+  $('openAlbum').onclick = () => { drawAlbum(); $('album').classList.add('on'); };
+  $('closeAlbum').onclick = () => $('album').classList.remove('on');
+
+  // ---- parent corner: long press on the jar, then a question in words (a child who can't read can't pass) ----
+  const UNITS = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة'];
+  const TENS = ['', '', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'];
+  const word = n => `${UNITS[n % 10]} و${TENS[Math.floor(n / 10)]}`;
+  let hold = null, gateAns = 0, confirmReset = false;
   const jar = $('jar');
-  jar.addEventListener('pointerdown', () => { clearTimeout(hold); hold = setTimeout(openParent, 1200); });
+  const openGate = () => {
+    const rnd = () => 21 + Math.floor(Math.random() * 79);
+    let a = rnd(); while (a % 10 === 0) a = rnd();
+    const opts = new Set([a]);
+    while (opts.size < 3) { const x = rnd(); if (x % 10) opts.add(x); }
+    gateAns = a;
+    $('pin').innerHTML = `<h2>ركن الوالد</h2><p>للدخول، اضغط على العدد: <strong>${word(a)}</strong></p>
+      <div class="row">${[...opts].sort(() => Math.random() - .5).map(x => `<button class="pb gate" data-g="${x}">${x}</button>`).join('')}</div>
+      <div class="row" style="margin-top:24px"><button class="pb" id="pclose">رجوع للعب</button></div>`;
+    $('parent').classList.add('on');
+  };
+  jar.addEventListener('pointerdown', () => { clearTimeout(hold); hold = setTimeout(openGate, 1200); });
   ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => jar.addEventListener(e, () => clearTimeout(hold)));
   jar.addEventListener('contextmenu', e => e.preventDefault());
 
   const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '—';
-  let confirmReset = false;
   const drawParent = () => {
     const rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => {
       const d = S.nums[n] || [0, 0, 0];
@@ -318,22 +442,27 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
       <h3>المستوى</h3>
       <div class="row">${['1: الأعداد 0–5', '2: الأعداد 0–9', '3: السلّم 0–9–0'].map((t, i) => `<button class="pb" data-pl="${i + 1}" aria-pressed="${S.level === i + 1}">${t}</button>`).join('')}</div>
       <p class="soft">ينفتح المستوى 2 وحده بعد ${UNLOCK2} عبورات للخمسة صحيحة من أول محاولة على التوالي، والمستوى 3 بعد ${UNLOCK3} إجابات صحيحة من أول محاولة على التوالي في المستوى 2. اختيارك هنا يفتح المستوى مباشرة.</p>
-      <h3>عبور الخمسة</h3>
+      <h3>عبور الخمسة («أرني»)</h3>
       <table><thead><tr><th>الاتجاه</th><th>مرات</th><th>من أول محاولة</th></tr></thead><tbody>
         <tr><td>صعودًا (مثل 4 ← 5): تنزل العلوية</td><td class="n">${S.up[0]}</td><td class="n">${pct(S.up[1], S.up[0])}</td></tr>
         <tr><td>نزولًا (مثل 5 ← 3): ترتفع العلوية</td><td class="n">${S.down[0]}</td><td class="n">${pct(S.down[1], S.down[0])}</td></tr>
       </tbody></table>
       <p class="soft">عبورات صحيحة متتالية الآن: ${S.crossRun} من ${UNLOCK2}.</p>
       <p>زر القمر (المسح): ${S.moon} مرة، منها <strong>${S.dodge}</strong> كان العدد المطلوب فيها يحتاج عبور الخمسة. كل عبور مُسح يعود إليه بعد دورين.</p>
-      <h3>كل عدد</h3>
+      <h3>القراءة («ماذا ترى؟»)</h3>
+      <p>${S.read[0]} مرة، من أول محاولة: <strong>${pct(S.read[1], S.read[0])}</strong>. أحد الخيارين الخاطئين غالبًا «توأم» العدد عبر الخمسة (مثل 3 و8)، فتكرار الخطأ هنا يعني خلطًا في الخرزة العلوية.</p>
+      <h3>كل عدد («أرني»)</h3>
       <table><thead><tr><th>العدد</th><th>مرات</th><th>من أول محاولة</th><th>محاولات خاطئة</th></tr></thead><tbody>${rows}</tbody></table>
       <p class="soft">الصفوف الملوّنة: ظهر العدد 3 مرات على الأقل، وأصاب فيه من أول محاولة أقل من 60%.</p>
+      <h3>الألبوم</h3>
+      <p>${Math.min(S.album, STICKERS.length)} من ${STICKERS.length} ملصقًا. يحصل طفلك على ملصق مفاجئ في نهاية كل جلسة مدتها 5 دقائق، مهما كانت إجاباته. لا تعِده به مسبقًا: المكافأة المتوقَّعة قد تُضعف اهتمامه باللعب نفسه.</p>
       <h3>إعادة البدء</h3>
-      <div class="row"><button class="pb" id="preset">${confirmReset ? 'اضغط مرة أخرى لمسح كل التقدّم والنجوم' : 'مسح التقدّم'}</button></div>
+      <div class="row"><button class="pb" id="preset">${confirmReset ? 'اضغط مرة أخرى لمسح كل التقدّم والنجوم والألبوم' : 'مسح التقدّم'}</button></div>
       <div class="row" style="margin-top:24px"><button class="pb" id="pclose" style="background:var(--go);color:#fff">رجوع للعب</button></div>`;
   };
-  const openParent = () => { confirmReset = false; drawParent(); $('parent').classList.add('on'); };
   $('parent').addEventListener('click', e => {
+    const g = e.target.closest('[data-g]');
+    if (g) { if (+g.dataset.g === gateAns) { confirmReset = false; drawParent(); } else $('parent').classList.remove('on'); return; }
     const lb = e.target.closest('[data-pl]');
     if (lb) { const l = +lb.dataset.pl; S.open = Math.max(S.open, l); setLevel(l); drawParent(); return; }
     if (e.target.closest('#preset')) {
