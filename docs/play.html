@@ -162,13 +162,22 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     { c: '#1d2a4d', s: `<path d="M50 10q22 20 16 56H34q-6-36 16-56z" fill="#f2f2f2"/><circle cx="50" cy="38" r="8" fill="#7cc6fe" stroke="${N}" stroke-width="3"/><path d="M34 54l-12 16h14zM66 54l12 16H64z" fill="#e0352b"/><path d="M40 66q10 26 20 0z" fill="#ffb020"/>` }
   ];
   const stickerSvg = i => `<svg viewBox="0 0 100 100" aria-hidden="true">${STICKERS[i].s}</svg>`;
+  // Fair shuffle (Fisher–Yates). sort(() => Math.random() - .5) is biased: it left the answer first 44% of the time.
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const $ = id => document.getElementById(id);
   const main = $('main'), num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count'), choices = $('choices');
 
   // ---- saved state (this browser only) ----
-  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0, read: [0, 0], album: 0 });
+  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0, read: [0, 0], album: 0, order: [], last: -1 });
   let S = blank(), stars = 0;
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem('sfk-play') || '{}')); stars = +localStorage.getItem('sfk-stars') || 0; } catch (e) {}
+  // Each device gets its own random sticker order, kept, so no two children see the same sequence.
+  const validOrder = o => Array.isArray(o) && o.length === STICKERS.length && new Set(o).size === STICKERS.length && o.every(i => i >= 0 && i < STICKERS.length);
+  // Older saves collected stickers in the fixed order 0, 1, 2…: keep those, shuffle only the rest.
+  if (!validOrder(S.order)) {
+    const kept = [...STICKERS.keys()].slice(0, Math.min(S.album, STICKERS.length));
+    S.order = kept.concat(shuffle([...STICKERS.keys()].filter(i => !kept.includes(i))));
+  }
   const save = () => { try { localStorage.setItem('sfk-play', JSON.stringify(S)); localStorage.setItem('sfk-stars', stars); } catch (e) {} };
   count.textContent = stars;
 
@@ -248,7 +257,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     r.set(n); rodEl.classList.add('ro'); main.classList.add('reading');
     const twin = n >= 5 ? n - 5 : n + 5;
     const opts = [twin, n + 1, n - 1, n + 2, n - 2].filter((x, i, a) => P.includes(x) && x !== n && a.indexOf(x) === i).slice(0, 2);
-    const all = [n, ...opts].sort(() => Math.random() - .5);
+    const all = shuffle([n, ...opts]);
     choices.innerHTML = all.map(x => `<button data-v="${x}" aria-label="${x}">${x}</button>`).join('');
   };
 
@@ -332,7 +341,10 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   const endSession = () => {
     ended = true;
     let i;
-    if (S.album < STICKERS.length) { i = S.album; S.album++; } else i = Math.floor(Math.random() * STICKERS.length);
+    // Collect in this device's random order; once all are collected, a random one that isn't the last shown.
+    if (S.album < STICKERS.length) { i = S.order[S.album]; S.album++; }
+    else { do { i = Math.floor(Math.random() * STICKERS.length); } while (i === S.last); }
+    S.last = i;
     save();
     $('end').style.background = STICKERS[i].c;
     $('endcount').style.color = STICKERS[i].c === N ? '#fff' : '';
@@ -399,9 +411,9 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
 
   // ---- album: collected stickers, the next one as a mystery shadow ----
   const drawAlbum = () => {
-    $('agrid').innerHTML = STICKERS.map((st, i) => {
-      if (i < S.album) return `<div class="tile" style="background:${st.c}">${stickerSvg(i)}</div>`;
-      if (i === S.album) return `<div class="tile shadow">${stickerSvg(i)}</div>`;
+    $('agrid').innerHTML = S.order.map((i, k) => {
+      if (k < S.album) return `<div class="tile" style="background:${STICKERS[i].c}">${stickerSvg(i)}</div>`;
+      if (k === S.album) return `<div class="tile shadow">${stickerSvg(i)}</div>`;
       return '<div class="tile">?</div>';
     }).join('');
   };
@@ -421,7 +433,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     while (opts.size < 3) { const x = rnd(); if (x % 10) opts.add(x); }
     gateAns = a;
     $('pin').innerHTML = `<h2>ركن الوالد</h2><p>للدخول، اضغط على العدد: <strong>${word(a)}</strong></p>
-      <div class="row">${[...opts].sort(() => Math.random() - .5).map(x => `<button class="pb gate" data-g="${x}">${x}</button>`).join('')}</div>
+      <div class="row">${shuffle([...opts]).map(x => `<button class="pb gate" data-g="${x}">${x}</button>`).join('')}</div>
       <div class="row" style="margin-top:24px"><button class="pb" id="pclose">رجوع للعب</button></div>`;
     $('parent').classList.add('on');
   };
