@@ -23,8 +23,14 @@ window.Soroban = (function () {
     opts = opts || {};
     let v = opts.value || 0, need = null;
     const draw = () => { el.innerHTML = svg(v, need); };
+    // A second tap on the SAME bead within 330 ms is a slip (a mouse double-click, a shaky finger),
+    // not a choice: ignore it. Otherwise a double-click on a bead undoes itself (e.g. 0 → 1 → 0).
+    let lastKey = '', lastAt = 0;
     el.addEventListener('click', ev => {
       const p = ev.target.closest('polygon'); if (!p) return;
+      const key = p.dataset.k + p.dataset.i, now = Date.now();
+      if (key === lastKey && now - lastAt < 330) return;
+      lastKey = key; lastAt = now;
       const i = +p.dataset.i, h = v >= 5 ? 5 : 0, e = v % 5;
       if (p.dataset.k === 'h') v = (h ? 0 : 5) + e;
       else v = h + (i < e ? i : i + 1);

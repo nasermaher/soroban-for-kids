@@ -168,7 +168,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   const main = $('main'), num = $('num'), dots = $('dots'), rodEl = $('rod'), ghost = $('ghost'), count = $('count'), choices = $('choices');
 
   // ---- saved state (this browser only) ----
-  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0, read: [0, 0], album: 0, order: [], last: -1 });
+  const blank = () => ({ level: 1, open: 1, nums: {}, up: [0, 0], down: [0, 0], crossRun: 0, firstRun: 0, moon: 0, dodge: 0, read: [0, 0], album: 0, order: [], last: -1, wrong: {}, moonAt: {} });
   let S = blank(), stars = 0;
   try { S = Object.assign(blank(), JSON.parse(localStorage.getItem('sfk-play') || '{}')); stars = +localStorage.getItem('sfk-stars') || 0; } catch (e) {}
   // Each device gets its own random sticker order, kept, so no two children see the same sequence.
@@ -374,6 +374,9 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     if (r.get() === target) celebrate(record(misses === 0));
     else {
       misses++;
+      // remember what he showed instead, per requested number (parent corner: "وضع بدلًا منه")
+      const w = S.wrong[target] || (S.wrong[target] = {}), got = r.get();
+      w[got] = (w[got] || 0) + 1; save();
       r.hint(target); // pulse only the beads that must move; no red, no error sound, no lost stars
       if (misses === 2) flipGhost();
       if (misses >= 3) stepGhost();
@@ -401,6 +404,7 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     // Keep the reset (a safe fresh start), but bring that same crossing back two turns later.
     const before = r.get();
     S.moon++;
+    S.moonAt[target] = (S.moonAt[target] || 0) + 1;
     if (S.level !== 3 && hi(before) !== hi(target)) { S.dodge++; retry = { t: target, c: 2, fromHi: hi(before) }; }
     save();
     r.set(0); tone(440, 0, .15, .08);
@@ -446,7 +450,9 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
     const rows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => {
       const d = S.nums[n] || [0, 0, 0];
       const weak = d[0] >= 3 && d[1] / d[0] < .6;
-      return `<tr class="${weak ? 'warn' : ''}"><td>${n}</td><td class="n">${d[0]}</td><td class="n">${pct(d[1], d[0])}</td><td class="n">${d[2]}</td></tr>`;
+      // the two most frequent wrong values, e.g. "0 ×12، 2 ×3"
+      const top = Object.entries(S.wrong[n] || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([v, c]) => `${v} ×${c}`).join('، ') || '—';
+      return `<tr class="${weak ? 'warn' : ''}"><td>${n}</td><td class="n">${d[0]}</td><td class="n">${pct(d[1], d[0])}</td><td class="n">${d[2]}</td><td>${top}</td></tr>`;
     }).join('');
     $('pin').innerHTML = `
       <h2>ركن الوالد</h2>
@@ -461,10 +467,11 @@ button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
       </tbody></table>
       <p class="soft">عبورات صحيحة متتالية الآن: ${S.crossRun} من ${UNLOCK2}.</p>
       <p>زر القمر (المسح): ${S.moon} مرة، منها <strong>${S.dodge}</strong> كان العدد المطلوب فيها يحتاج عبور الخمسة. كل عبور مُسح يعود إليه بعد دورين.</p>
+      <p class="soft">أكثر الأعداد التي ضغط القمر وهو يحاولها: ${Object.entries(S.moonAt).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([v, c]) => `${v} (${c})`).join('، ') || '—'}.</p>
       <h3>القراءة («ماذا ترى؟»)</h3>
       <p>${S.read[0]} مرة، من أول محاولة: <strong>${pct(S.read[1], S.read[0])}</strong>. أحد الخيارين الخاطئين غالبًا «توأم» العدد عبر الخمسة (مثل 3 و8)، فتكرار الخطأ هنا يعني خلطًا في الخرزة العلوية.</p>
       <h3>كل عدد («أرني»)</h3>
-      <table><thead><tr><th>العدد</th><th>مرات</th><th>من أول محاولة</th><th>محاولات خاطئة</th></tr></thead><tbody>${rows}</tbody></table>
+      <table><thead><tr><th>العدد</th><th>مرات</th><th>من أول محاولة</th><th>محاولات خاطئة</th><th>وضع بدلًا منه</th></tr></thead><tbody>${rows}</tbody></table>
       <p class="soft">الصفوف الملوّنة: ظهر العدد 3 مرات على الأقل، وأصاب فيه من أول محاولة أقل من 60%.</p>
       <h3>الألبوم</h3>
       <p>${Math.min(S.album, STICKERS.length)} من ${STICKERS.length} ملصقًا. يحصل طفلك على ملصق مفاجئ في نهاية كل جلسة مدتها 5 دقائق، مهما كانت إجاباته. لا تعِده به مسبقًا: المكافأة المتوقَّعة قد تُضعف اهتمامه باللعب نفسه.</p>
